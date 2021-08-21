@@ -2,6 +2,16 @@
 
 use yii\web\Request;
 
+require(__DIR__ . '/../base/Container.php');
+require(__DIR__ . '/../base/helpers/base.php');
+require(__DIR__ . '/../base/helpers/types.php');
+require(__DIR__ . '/../base/helpers/strings.php');
+require(__DIR__ . '/../base/helpers/url.php');
+require(__DIR__ . '/../base/helpers/security.php');
+require(__DIR__ . '/../base/helpers/tools.php');
+require(__DIR__ . '/../base/helpers/user.php');
+
+
 $params = require __DIR__ . '/params.php';
 $db = require __DIR__ . '/db.php';
 $baseUrl = str_replace('/web', '', (new Request)->getBaseUrl());
@@ -56,6 +66,11 @@ $config = [
             ],
         ],
 
+    ],
+    'modules' => [
+        'cabinet' => [
+            'class' => 'app\modules\cabinet\cabinet',
+        ],
     ],
     'params' => $params,
 ];
