@@ -24,6 +24,9 @@ $config = [
         '@npm'   => '@vendor/npm-asset',
     ],
     'components' => [
+        'authManager' => [
+            'class' => 'yii\rbac\DbManager', // or use 'yii\rbac\DbManager'
+        ],
         'request' => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
             'cookieValidationKey' => 'q65w1d65',
@@ -71,6 +74,25 @@ $config = [
         'cabinet' => [
             'class' => 'app\modules\cabinet\cabinet',
         ],
+        'rbac' => [
+            'class' => 'mdm\admin\Module',
+            'layout' => 'left-menu', // defaults to null, using the application's layout without the menu
+            'mainLayout' => '@app/views/layouts/main.php',
+            'menus' => [
+                'assignment' => [
+                    'label' => 'Grant Access' // change label
+                ],
+                'route' => null, // disable menu
+            ],
+        ],
+    ],
+    'as access' => [
+        'class' => 'mdm\admin\components\AccessControl',
+        'allowActions' => [
+            'site/*',
+            'rbac/*',
+            'some-controller/some-action',
+        ]
     ],
     'params' => $params,
 ];
