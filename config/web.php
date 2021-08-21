@@ -90,6 +90,7 @@ $config = [
         'class' => 'mdm\admin\components\AccessControl',
         'allowActions' => [
             'site/*',
+            'cabinet/*',
             'rbac/*',
             'some-controller/some-action',
         ]
