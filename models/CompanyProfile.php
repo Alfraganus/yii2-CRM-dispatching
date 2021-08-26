@@ -34,9 +34,9 @@ class CompanyProfile extends \yii\db\ActiveRecord
     {
         return [
             [['user_id'], 'integer'],
-            [['company_name', 'email'], 'required'],
+            [['company_name'], 'required'],
             [['owner_contact_info'], 'string'],
-            [['company_name', 'address', 'email'], 'string', 'max' => 255],
+            [['company_name', 'address'], 'string', 'max' => 255],
             [['phone'], 'string', 'max' => 200],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['user_id' => 'id']],
         ];
@@ -53,7 +53,6 @@ class CompanyProfile extends \yii\db\ActiveRecord
             'company_name' => Yii::t('auth', 'Company Name'),
             'address' => Yii::t('auth', 'Address'),
             'phone' => Yii::t('auth', 'Phone'),
-            'email' => Yii::t('auth', 'Email'),
             'owner_contact_info' => Yii::t('auth', 'Owner Contact Info'),
         ];
     }

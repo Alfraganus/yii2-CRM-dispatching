@@ -15,20 +15,15 @@ use yii\web\AssetBundle;
  * @author Qiang Xue <qiang.xue@gmail.com>
  * @since 2.0
  */
-class AppAsset extends AssetBundle
+class AuthAsset extends AssetBundle
 {
     public $basePath = '@webroot';
     public $baseUrl = '@web';
     public $css = [
-        'css/styles.css',
-        'https://fonts.googleapis.com/css?family=Montserrat:400,700',
-        'https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700'
+        'css/site.css',
+        '//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css'
     ];
     public $js = [
-        'https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js',
-        'js/scripts.js',
-        'https://cdn.startbootstrap.com/sb-forms-latest.js',
-        'https://use.fontawesome.com/releases/v5.15.3/js/all.js'
     ];
     public $depends = [
         'yii\web\YiiAsset',

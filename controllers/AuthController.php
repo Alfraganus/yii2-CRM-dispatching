@@ -2,7 +2,10 @@
 
 namespace app\controllers;
 
+use app\models\CompanyProfile;
+use app\models\User;
 use Yii;
+use yii\base\Model;
 use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\Response;
@@ -67,18 +70,37 @@ class AuthController extends Controller
 
     public function actionRegister()
     {
-        $userForm = new UserCreateForm();
-
-        if ($userForm->load(Yii::$app->request->post()) && $userForm->validate()) {
+        $this->layout='auth';
+        $models = [
+           'userModel'=>new User(),
+           'userProfile'=> new CompanyProfile()
+        ];
+        $userModel = new User();
+        $userProfile = new CompanyProfile();
+          if ($userModel->load(Yii::$app->request->post()) && $userProfile->load(Yii::$app->request->post()))
+           {
+              $transaction = Yii::$app->getDb()->beginTransaction();
             try {
-                $user = $this->userService->create($userForm);
-                return $this->redirect(['view', 'id' => $user->id]);
+                $userModel->password_hash = Yii::$app->security->generatePasswordHash($userModel->password);
+                $userModel->save();
+
+                $userProfile->user_id = $userModel->id;
+                $userProfile->save();
+
+                $authManager = Yii::$app->authManager;
+                $role = $authManager->getRole('cadmin');
+                $authManager->assign($role,$userProfile->user_id);
+
+                $transaction->commit();
+                return $this->redirect(['/']);
             }catch (DomainException $exception){
+                $transaction->rollBack();
                 Yii::$app->session->setFlash('error', $exception->getMessage());
             }
         }
-        return $this->render('create', [
-            'userForm' => $userForm,
+        return $this->render('register', [
+            'userModel' => new User(),
+            'userProfile' =>new CompanyProfile(),
         ]);
     }
 

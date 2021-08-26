@@ -24,6 +24,19 @@ $config = [
         '@npm'   => '@vendor/npm-asset',
     ],
     'components' => [
+        'i18n' => [
+            'translations' => [
+                '*' => [
+                    'class' => 'yii\i18n\DbMessageSource',
+                    'db' => 'db',
+                    'sourceLanguage' => 'xx-XX', // Developer language
+                    'sourceMessageTable' => '{{%language_source}}',
+                    'messageTable' => '{{%language_translate}}',
+                    'cachingDuration' => 86400,
+                    'enableCaching' => true,
+                ],
+            ],
+        ],
         'authManager' => [
             'class' => 'yii\rbac\DbManager', // or use 'yii\rbac\DbManager'
         ],
@@ -71,6 +84,9 @@ $config = [
 
     ],
     'modules' => [
+        'translatemanager' => [
+            'class' => 'lajax\translatemanager\Module',
+        ],
         'cabinet' => [
             'class' => 'app\modules\cabinet\cabinet',
         ],
@@ -90,6 +106,7 @@ $config = [
         'class' => 'mdm\admin\components\AccessControl',
         'allowActions' => [
             'gii/*',
+            'auth/*',
             'site/*',
             'cabinet/*',
             'rbac/*',
