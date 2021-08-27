@@ -16,7 +16,6 @@ class User extends ActiveRecord implements IdentityInterface
     const STATUS_ACTIVE = 10;
     const SCENARIO_CREATE = 'create';
     public $role;
-    public $password;
     public $retypePassword;
     /**
      * {@inheritdoc}
@@ -32,18 +31,18 @@ class User extends ActiveRecord implements IdentityInterface
         return [
             [['username'], 'required'],
             [[ 'status'], 'integer'],
-            [['username', 'password'], 'string', 'max' => 255],
+            [['username'], 'string', 'max' => 255],
             [['role'],'safe'],
             [['email'],'email'],
-            ['password', 'required','on' => self::SCENARIO_CREATE],
-            ['password', 'string', 'min' => 6],
+            ['password_hash', 'required','on' => self::SCENARIO_CREATE],
+            ['password_hash', 'string', 'min' => 6],
             ['retypePassword', 'required','on' => self::SCENARIO_CREATE],
-            ['retypePassword', 'compare', 'compareAttribute' => 'password'],
+            ['retypePassword', 'compare', 'compareAttribute' => 'password_hash'],
 
         ];
     }
 
-    public function signup()
+    public function signup($password)
     {
         if ($this->validate()) {
             $class = Yii::$app->getUser()->identityClass ? : 'mdm\admin\models\User';
@@ -51,7 +50,7 @@ class User extends ActiveRecord implements IdentityInterface
             $user->username = $this->username;
             $user->email = $this->email;
             $user->status = ArrayHelper::getValue(Yii::$app->params, 'user.defaultStatus', UserStatus::ACTIVE);
-            $user->setPassword($this->password);
+            $user->password_hash = Yii::$app->security->generatePasswordHash($password);
             $user->generateAuthKey();
             if ($user->save()) {
                 return $user;
@@ -171,8 +170,9 @@ class User extends ActiveRecord implements IdentityInterface
      */
     public function validatePassword($password)
     {
-        return Yii::$app->security->validatePassword($password, $this->password);
+        return Yii::$app->security->validatePassword($password, $this->password_hash);
     }
+
 
     /**
      * Generates password hash from password and sets it to the model

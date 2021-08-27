@@ -15,6 +15,8 @@ use app\models\ContactForm;
 
 class AuthController extends Controller
 {
+
+    public $layout='auth';
     /**
      * {@inheritdoc}
      */
@@ -70,7 +72,7 @@ class AuthController extends Controller
 
     public function actionRegister()
     {
-        $this->layout='auth';
+
         $models = [
            'userModel'=>new User(),
            'userProfile'=> new CompanyProfile()
@@ -81,15 +83,12 @@ class AuthController extends Controller
            {
               $transaction = Yii::$app->getDb()->beginTransaction();
             try {
-                $userModel->password_hash = Yii::$app->security->generatePasswordHash($userModel->password);
-                $userModel->save();
-
-                $userProfile->user_id = $userModel->id;
+                if ($user = $userModel->signup($userModel->password_hash)) {
+                    $role = Yii::$app->authManager->getRole('cadmin');
+                    Yii::$app->authManager->assign($role,$user->id);
+                }
+                $userProfile->user_id = $user->id;
                 $userProfile->save();
-
-                $authManager = Yii::$app->authManager;
-                $role = $authManager->getRole('cadmin');
-                $authManager->assign($role,$userProfile->user_id);
 
                 $transaction->commit();
                 return $this->redirect(['/']);

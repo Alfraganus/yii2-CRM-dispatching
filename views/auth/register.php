@@ -21,7 +21,7 @@ use yii\widgets\ActiveForm;
 
                     <?= $form->field($userModel, 'username')->textInput(['placeholder' =>'login',['class'=>'input-group-prepend']])->label(false) ?>
 
-                <?= $form->field($userModel, 'password')->textInput(['placeholder' =>'password',['class'=>'input-group-prepend']])->label(false) ?>
+                <?= $form->field($userModel, 'password_hash')->textInput(['placeholder' =>'password',['class'=>'input-group-prepend']])->label(false) ?>
                 <?= $form->field($userModel, 'email')->textInput(['placeholder' =>'Email'])->label(false) ?>
                 <?= $form->field($userProfile, 'company_name')->textInput(['placeholder' =>'Company name'])->label(false) ?>
                 <?= $form->field($userProfile, 'address')->textInput(['placeholder' =>'Address'])->label(false) ?>
@@ -30,7 +30,7 @@ use yii\widgets\ActiveForm;
 
 
                 <div class="form-group">
-                    <input type="submit" name="btn" value="Login" class="btn btn-outline-danger float-right login_btn">
+                    <input type="submit" name="btn" value="register" class="btn btn-outline-danger float-right login_btn">
                 </div>
 
             </form>

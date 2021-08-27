@@ -1,5 +1,13 @@
 <?php
 // Get current user
+
+function company_name()
+{
+    $user_id = current_user_id();
+    $company = \app\models\CompanyProfile::findOne(['user_id'=>$user_id]);
+    return $company->company_name;
+}
+
 function current_user()
 {
     return \Yii::$app->user->identity;
@@ -40,13 +48,3 @@ function is_user_logged_in()
     return $isGuest ? false : true;
 }
 
-// Get cart hash
-function get_card_hash()
-{
-    $cookies = \Yii::$app->request->cookies;
-    $card_hash = $cookies->getValue('card_hash');
-
-    if (is_string($card_hash) && $card_hash) {
-        return $card_hash;
-    }
-}

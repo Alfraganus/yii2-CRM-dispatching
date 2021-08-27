@@ -3,7 +3,7 @@
         <div class="masthead-subheading">Welcome To Our Studio!</div>
         <div class="masthead-heading text-uppercase">It's Nice To Meet You</div>
         <a class="btn btn-primary btn-xl text-uppercase" href="<?=\yii\helpers\Url::to(['auth/register'])?>">Sign up</a>
-        <a class="btn btn-danger btn-xl text-uppercase" href="#services">Login</a>
+        <a class="btn btn-danger btn-xl text-uppercase" href="<?=\yii\helpers\Url::to(['auth/login'])?>">Login</a>
     </div>
 </header>
 <section class="page-section" id="services">
