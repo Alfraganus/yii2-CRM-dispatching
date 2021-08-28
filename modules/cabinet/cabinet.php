@@ -2,6 +2,9 @@
 
 namespace app\modules\cabinet;
 
+use Yii;
+use yii\helpers\Url;
+
 /**
  * panel module definition class
  */
@@ -18,7 +21,9 @@ class cabinet extends \yii\base\Module
     public function init()
     {
         parent::init();
-
+        if (Yii::$app->user->isGuest) {
+        return Yii::$app->response->redirect(array('auth/login'));
+        }
         // custom initialization code goes here
     }
 }

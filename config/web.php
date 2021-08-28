@@ -83,6 +83,23 @@ $config = [
         ],
 
     ],
+    'as beforeRequest' => [
+        'class' => 'yii\filters\AccessControl',
+        'only' => ['api'],
+        'rules' => [
+            [
+                'allow' => true,
+                'actions' => ['login'],
+            ],
+            [
+                'allow' => true,
+                'roles' => ['@'],
+            ],
+        ],
+        'denyCallback' => function () {
+            return Yii::$app->response->redirect(['site/login']);
+        },
+    ],
     'modules' => [
         'translatemanager' => [
             'class' => 'lajax\translatemanager\Module',
@@ -93,7 +110,7 @@ $config = [
         'rbac' => [
             'class' => 'mdm\admin\Module',
             'layout' => 'left-menu', // defaults to null, using the application's layout without the menu
-            'mainLayout' => '@app/views/layouts/main.php',
+//            'mainLayout' => '@app/views/layouts/auth.php',
             'menus' => [
                 'assignment' => [
                     'label' => 'Grant Access' // change label

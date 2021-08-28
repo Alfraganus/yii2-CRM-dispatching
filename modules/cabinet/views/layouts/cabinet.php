@@ -19,17 +19,21 @@ $this->beginPage(); ?>
 </head>
 
 <body data-sidebar="dark">
-    <?php $this->beginBody(); ?>
-    <body class="hold-transition sidebar-mini layout-fixed">
-    <div class="wrapper">
-        <?= \app\modules\cabinet\widgets\HeaderWidget::widget(); ?>
+<?php $this->beginBody(); ?>
+<body class="hold-transition sidebar-mini layout-fixed">
+<div class="wrapper">
+    <?= \app\modules\cabinet\widgets\HeaderWidget::widget(); ?>
 
-        <?= \app\modules\cabinet\widgets\SidebarWidget::widget(); ?>
+    <?= \app\modules\cabinet\widgets\SidebarWidget::widget(); ?>
 
-
-                    <?= $content ?>
-
-            <?= \app\modules\cabinet\widgets\FooterWidget::widget(); ?>
+    <div class="content-wrapper">
+        <div class="content-header">
+            <div class="container-fluid">
+                <?= $content ?>
+            </div>
+        </div>
+    </div>
+    <?= \app\modules\cabinet\widgets\FooterWidget::widget(); ?>
 
 
     <?php $this->endBody(); ?>

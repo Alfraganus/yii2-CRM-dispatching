@@ -12,7 +12,7 @@ class CabinetAsset extends AssetBundle
     public $baseUrl = '@web';
 
     public $css = [
-        'web/plugins/fontawesome-free/css/all.min.css',
+        'https://pro.fontawesome.com/releases/v5.10.0/css/all.css',
         'web/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css',
         'web/plugins/icheck-bootstrap/icheck-bootstrap.min.css',
         'web/plugins/jqvmap/jqvmap.min.css',

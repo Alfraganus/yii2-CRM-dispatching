@@ -8,6 +8,15 @@ function company_name()
     return $company->company_name;
 }
 
+function userRoles()
+{
+    $roles = Yii::$app->authManager->getRoles();
+    unset($roles['cadmin']);
+    unset($roles['superadmin']);
+    return $roles;
+}
+
+
 function current_user()
 {
     return \Yii::$app->user->identity;
@@ -35,7 +44,7 @@ function current_user_profile($user_id = null)
 function current_user_roles($user_id = null)
 {
     if (is_null($user_id)) {
-        $user_id = current_user_id();
+       return \Yii::$app->authManager->getRolesByUser($user_id);
     }
 
 //    return \base\libs\Redis::getUserRoles($user_id);

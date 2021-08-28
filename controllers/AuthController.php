@@ -91,7 +91,7 @@ class AuthController extends Controller
                 $userProfile->save();
 
                 $transaction->commit();
-                return $this->redirect(['/']);
+                return $this->redirect(['auth/login']);
             }catch (DomainException $exception){
                 $transaction->rollBack();
                 Yii::$app->session->setFlash('error', $exception->getMessage());
@@ -112,7 +112,7 @@ class AuthController extends Controller
 
         $model = new LoginForm();
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
-            return $this->goBack();
+            return $this->redirect(['cabinet/']);
         }
 
         $model->password = '';
