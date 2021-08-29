@@ -123,7 +123,7 @@ class SiteController extends Controller
      */
     public function actionAbout()
     {
-        $this->layout='registration';
+
         return $this->render('about');
     }
 }
