@@ -5,7 +5,7 @@ function company_name()
 {
     $user_id = current_user_id();
     $company = \app\models\CompanyProfile::findOne(['user_id'=>$user_id]);
-    return $company->company_name;
+    return $company->company_name??'-';
 }
 
 function userRoles()

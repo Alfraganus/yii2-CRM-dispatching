@@ -5,6 +5,7 @@ use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
 /* @var $form yii\widgets\ActiveForm */
+$userProfile->isNewRecord==1 ? $userProfile->free_trial=1:$userProfile->free_trial;?>
 ?>
 
 
@@ -28,6 +29,7 @@ use yii\widgets\ActiveForm;
                 <?= $form->field($userProfile, 'phone')->textInput(['placeholder' =>'Phone'])->label(false) ?>
                 <?= $form->field($userProfile, 'owner_contact_info')->textInput(['placeholder' =>'Company contact person'])->label(false) ?>
 
+                <?= $form->field($userProfile, 'free_trial')->radioList( [0=>'Buy subscription', 1 => 'Use 15 free trial days'],['selected'=>1] );?>
 
                 <div class="form-group">
                     <input type="submit" name="btn" value="register" class="btn btn-outline-danger float-right login_btn">
@@ -40,7 +42,8 @@ use yii\widgets\ActiveForm;
 <?php ActiveForm::end(); ?>
 
 <style>
-    .help-block {
+    .help-block,.control-label,.card-body  {
         color: aliceblue !important;
     }
+
 </style>

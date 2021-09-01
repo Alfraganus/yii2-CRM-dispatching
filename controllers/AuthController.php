@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use app\models\CompanyProfile;
 use app\models\User;
+use Carbon\Carbon;
 use Yii;
 use yii\base\Model;
 use yii\filters\AccessControl;
@@ -86,6 +87,10 @@ class AuthController extends Controller
                 if ($user = $userModel->signup($userModel->password_hash)) {
                     $role = Yii::$app->authManager->getRole('cadmin');
                     Yii::$app->authManager->assign($role,$user->id);
+                }
+                if($userProfile->free_trial == 1)  {
+                    $userProfile->free_triel_start_date =Carbon::now();
+                    $userProfile->free_triel_end_date =(new Carbon())::now()->addDays(15);
                 }
                 $userProfile->user_id = $user->id;
                 $userProfile->save();

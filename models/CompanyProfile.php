@@ -9,10 +9,13 @@ use Yii;
  *
  * @property int $id
  * @property int|null $user_id
+ * @property int|null $free_trial
  * @property string $company_name
  * @property string|null $address
  * @property string|null $phone
  * @property string $email
+ * @property string $free_triel_end_date
+ * @property string $free_triel_start_date
  * @property string|null $owner_contact_info
  *
  * @property User $user
@@ -38,6 +41,8 @@ class CompanyProfile extends \yii\db\ActiveRecord
             [['owner_contact_info'], 'string'],
             [['company_name', 'address'], 'string', 'max' => 255],
             [['phone'], 'string', 'max' => 200],
+            [['free_triel_end_date'], 'safe'],
+            [['free_trial'], 'integer','max' => 1],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['user_id' => 'id']],
         ];
     }
