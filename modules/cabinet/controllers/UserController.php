@@ -48,6 +48,20 @@ class UserController extends DefaultController
         ]);
     }
 
+    public function actionProfile()
+    {
+        $checkProfile = null;
+        $getCurrentRole =  array_keys(current_user_roles(current_user()))[0];
+        if ($getCurrentRole == 'cadmin') {
+            $checkProfile = check_tariff(current_user());
+        }
+        return $this->render('user_profile',[
+            'checkProfile'=>$checkProfile
+        ]);
+    }
+
+
+
     /**
      * Displays a single User model.
      * @param int $id

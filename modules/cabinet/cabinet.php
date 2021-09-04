@@ -24,6 +24,7 @@ class cabinet extends \yii\base\Module
         if (Yii::$app->user->isGuest) {
         return Yii::$app->response->redirect(array('auth/login'));
         }
+        $this->layout = 'cabinet';
         // custom initialization code goes here
     }
 }

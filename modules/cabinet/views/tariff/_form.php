@@ -17,6 +17,7 @@ use yii\widgets\ActiveForm;
     <?= $form->field($model, 'description')->textarea(['rows' => 6]) ?>
 
     <?= $form->field($model, 'months_quantity')->textInput() ?>
+    <?= $form->field($model, 'discount')->textInput() ?>
 
     <?= $form->field($model, 'active')->textInput() ?>
 

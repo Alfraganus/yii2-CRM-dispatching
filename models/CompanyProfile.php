@@ -22,6 +22,9 @@ use Yii;
  */
 class CompanyProfile extends \yii\db\ActiveRecord
 {
+
+    CONST TRIAL_ACTIVE = 1;
+    CONST TRIAL_INACTIVE = 0;
     /**
      * {@inheritdoc}
      */

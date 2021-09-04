@@ -15,11 +15,9 @@ class DefaultController extends Controller
      * Renders the index view for the module
      * @return string
      */
-    public $layout ='cabinet';
 
     public function actionIndex()
     {
-        $this->layout='cabinet';
         return $this->render('index');
     }
 

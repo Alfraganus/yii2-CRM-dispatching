@@ -17,6 +17,11 @@ class User extends ActiveRecord implements IdentityInterface
     const SCENARIO_CREATE = 'create';
     public $role;
     public $retypePassword;
+    public $manager;
+    public $driver;
+    public $dispatcher;
+    public $safety;
+    public $accountant;
     /**
      * {@inheritdoc}
      */

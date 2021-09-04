@@ -73,11 +73,6 @@ class AuthController extends Controller
 
     public function actionRegister()
     {
-
-        $models = [
-           'userModel'=>new User(),
-           'userProfile'=> new CompanyProfile()
-        ];
         $userModel = new User();
         $userProfile = new CompanyProfile();
           if ($userModel->load(Yii::$app->request->post()) && $userProfile->load(Yii::$app->request->post()))
