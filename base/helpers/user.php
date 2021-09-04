@@ -4,6 +4,19 @@ use Carbon\Carbon;
 // Get current user
 
 
+function tariffUsers($tariff_id)
+{
+    $tariff = \app\models\Tariffs::findOne($tariff_id);
+    return $tariff;
+}
+
+function extraUserPrices($key)
+{
+    $extraUserPrice = \app\models\UnitPrices::findOne(['unit_key'=>$key]);
+    return $extraUserPrice->unit_value;
+}
+
+
 function check_tariff($user_id)
 {
     $company = CompanyProfile::findOne(['user_id'=>$user_id]);

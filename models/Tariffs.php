@@ -19,6 +19,9 @@ use Yii;
  */
 class Tariffs extends \yii\db\ActiveRecord
 {
+
+    CONST ACTIVE = 1;
+    CONST INACTIVE = 0;
     /**
      * {@inheritdoc}
      */

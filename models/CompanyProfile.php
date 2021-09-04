@@ -39,7 +39,7 @@ class CompanyProfile extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['user_id'], 'integer'],
+            [['user_id','manager','driver','dispatcher','safety_specialist','accountant'], 'integer'],
             [['company_name'], 'required'],
             [['owner_contact_info'], 'string'],
             [['company_name', 'address'], 'string', 'max' => 255],

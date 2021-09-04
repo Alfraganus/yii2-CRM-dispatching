@@ -2,19 +2,16 @@
 
 namespace app\modules\cabinet\controllers;
 
-use app\models\Tariffs;
-use app\models\User;
-use app\models\search\UserSearch;
-use app\models\UserProfile;
-use Yii;
+use app\models\UnitPrices;
+use app\models\search\UnitPricesSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * UserController implements the CRUD actions for User model.
+ * UnitPricesController implements the CRUD actions for UnitPrices model.
  */
-class UserController extends DefaultController
+class UnitPricesController extends Controller
 {
     /**
      * @inheritDoc
@@ -35,12 +32,12 @@ class UserController extends DefaultController
     }
 
     /**
-     * Lists all User models.
+     * Lists all UnitPrices models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new UserSearch();
+        $searchModel = new UnitPricesSearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
 
         return $this->render('index', [
@@ -49,27 +46,9 @@ class UserController extends DefaultController
         ]);
     }
 
-    public function actionProfile()
-    {
-        $checkProfile = null;
-        $getCurrentRole =  array_keys(current_user_roles(current_user()))[0];
-        if ($getCurrentRole == 'cadmin') {
-            $checkProfile = check_tariff(current_user());
-        }
-        $tariffs = Tariffs::findAll(['active'=>Tariffs::ACTIVE]);
-        $aditionalUserModel = new User();
-        return $this->render('user_profile',[
-            'checkProfile'=>$checkProfile,
-            'tariffs'=>$tariffs,
-            'aditionalUserModel'=>$aditionalUserModel,
-        ]);
-    }
-
-
-
     /**
-     * Displays a single User model.
-     * @param int $id
+     * Displays a single UnitPrices model.
+     * @param int $id ID
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
@@ -81,45 +60,31 @@ class UserController extends DefaultController
     }
 
     /**
-     * Creates a new User model.
+     * Creates a new UnitPrices model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new User();
-        $userProfile = new UserProfile();
-        $model->scenario = User::SCENARIO_CREATE;
-        if ($model->load(Yii::$app->request->post()) && $userProfile->load(Yii::$app->request->post())) {
-            $transaction = Yii::$app->getDb()->beginTransaction();
-            try {
-                if ($user = $model->signup($model->password_hash)) {
-                    $role = Yii::$app->authManager->getRole($model->role);
-                    Yii::$app->authManager->assign($role,$user->id);
+        $model = new UnitPrices();
 
-                    $userProfile->company_id =current_user_id();
-                    $userProfile->user_id = $user->id;
-                    $userProfile->save();
-                    $transaction->commit();
-                    Yii::$app->session->setFlash('success', Yii::t('user','User has been created successfully!'));
-                }
-                return $this->redirect(['user/']);
-            }catch (DomainException $exception){
-                $transaction->rollBack();
-                Yii::$app->session->setFlash('error', $exception->getMessage());
+        if ($this->request->isPost) {
+            if ($model->load($this->request->post()) && $model->save()) {
+                return $this->redirect(['view', 'id' => $model->id]);
             }
+        } else {
+            $model->loadDefaultValues();
         }
 
         return $this->render('create', [
             'model' => $model,
-            'userProfile' => $userProfile,
         ]);
     }
 
     /**
-     * Updates an existing User model.
+     * Updates an existing UnitPrices model.
      * If update is successful, the browser will be redirected to the 'view' page.
-     * @param int $id
+     * @param int $id ID
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
@@ -137,9 +102,9 @@ class UserController extends DefaultController
     }
 
     /**
-     * Deletes an existing User model.
+     * Deletes an existing UnitPrices model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param int $id
+     * @param int $id ID
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
@@ -151,18 +116,18 @@ class UserController extends DefaultController
     }
 
     /**
-     * Finds the User model based on its primary key value.
+     * Finds the UnitPrices model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param int $id
-     * @return User the loaded model
+     * @param int $id ID
+     * @return UnitPrices the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = User::findOne($id)) !== null) {
+        if (($model = UnitPrices::findOne($id)) !== null) {
             return $model;
         }
 
-        throw new NotFoundHttpException('The requested page does not exist.');
+        throw new NotFoundHttpException(Yii::t('price', 'The requested page does not exist.'));
     }
 }
