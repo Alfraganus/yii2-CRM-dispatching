@@ -20,16 +20,17 @@ class LoginForm extends Login
         $session->open();
         $session->set('auth', $auth);
         $session->close();
-        $this->updateAuth($auth,$username);
+        $getUserModel = User::findOne(['username'=>$username]);
+        $this->updateAuth($auth,$getUserModel->id);
     }
 
-    public function updateAuth($auth,$username)
+    public function updateAuth($auth,$user_id)
     {
         $connection = Yii::$app->getDb();
         $command = $connection->createCommand("
         UPDATE auth_assignment
         SET token = '$auth'
-        WHERE user_id = '22'");
+        WHERE user_id = '$user_id'");
        $command->queryOne();
     }
 
