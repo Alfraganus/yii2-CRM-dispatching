@@ -38,7 +38,7 @@ class Tariffs extends \yii\db\ActiveRecord
         return [
             [['tariff_name', 'description', 'months_quantity'], 'required'],
             [['description'], 'string'],
-            [['months_quantity', 'active'], 'integer'],
+            [['months_quantity', 'active','accountant','safety_specialist','dispatcher','driver'], 'integer'],
             [['price', 'discount'], 'number'],
             [['tariff_name'], 'string', 'max' => 255],
         ];

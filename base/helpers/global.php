@@ -1,6 +1,16 @@
 <?php
 // Get current lang
-function get_current_lang($field = 'lang_code')
+
+function get_percentage($total, $number)
+{
+    if ($total > 0) {
+        return number_format(($total / 100) * $number, 2);
+    } else {
+        return 0;
+
+    }
+}
+        function get_current_lang($field = 'lang_code')
 {
     $array = \base\Container::$language;
 

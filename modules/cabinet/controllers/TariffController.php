@@ -2,8 +2,13 @@
 
 namespace app\modules\cabinet\controllers;
 
+use app\models\Subscriptions;
+use Carbon\Carbon;
+use phpDocumentor\Reflection\DocBlock\Tags\Throws;
+use Yii;
 use app\models\Tariffs;
 use app\models\search\TariffsSearch;
+use yii\bootstrap\NavBar;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -30,6 +35,57 @@ class TariffController extends Controller
             ]
         );
     }
+
+    public function actionInvoice()
+    {
+        if($post  = Yii::$app->request->post()) {
+            $session = Yii::$app->session;
+            $session->open();
+
+            $selectedTariff = Tariffs::findOne($post['User']['tariff']);
+            $invoice = time();
+            $selectedAditionalUsers = array(
+                'dispatcher'=>$post['User']['dispatcher'],
+                'accountant'=>$post['User']['accountant'],
+                'safety'=>$post['User']['safety'],
+                'driver'=>$post['User']['driver'],
+            );
+            $tariffs = Tariffs::findOne(['active'=>Tariffs::ACTIVE]);
+            $session->set('additionalUsers',$selectedAditionalUsers);
+            $session->set('tariff_id',$tariffs->id);
+            return $this->render('invoice',[
+                'selectedTariff'=>$selectedTariff,
+                'additionalUsers'=>$selectedAditionalUsers,
+                'invoice'=>$invoice,
+                'tariff'=>$tariffs,
+            ]);
+        }
+        else {
+            throw new \yii\web\HttpException(401, 'Request must be from POST!');
+        }
+    }
+
+    public function actionPayTariff()
+    {
+        $session = Yii::$app->session;
+        if($post  = Yii::$app->request->post()) {
+            $users = $session->get('additionalUsers');
+
+            if ($session->isActive) {
+            $tariff = Tariffs::findOne($session->get('tariff_id'));
+                $subscriptions = new Subscriptions();
+                $subscriptions->tariff_id =  $session->get('tariff_id');
+                $subscriptions->company_id = current_user_id();
+                $subscriptions->subscription_start_date = Carbon::now();
+                $subscriptions->subscription_end_date = Carbon::now()->addMonths($tariff->months_quantity);
+                $subscriptions->overall_price = $session->get('overall_price');
+                $subscriptions->save(false);
+                return $this->redirect('/');
+            }
+
+        }
+    }
+
 
     /**
      * Lists all Tariffs models.

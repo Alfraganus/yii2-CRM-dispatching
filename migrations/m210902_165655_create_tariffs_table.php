@@ -19,6 +19,10 @@ class m210902_165655_create_tariffs_table extends Migration
             'months_quantity'=>$this->integer()->notNull(),
             'discount'=>$this->double()->null(),
             'price'=>$this->double()->null(),
+            'accountant'=>$this->integer()->null(),
+            'safety_specialist'=>$this->integer()->null(),
+            'dispatcher'=>$this->integer()->null(),
+            'driver'=>$this->integer()->null(),
             'active'=>$this->smallInteger(1)->defaultValue(1)
         ]);
     }

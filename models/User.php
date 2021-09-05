@@ -22,6 +22,7 @@ class User extends ActiveRecord implements IdentityInterface
     public $dispatcher;
     public $safety;
     public $accountant;
+    public $tariff;
     /**
      * {@inheritdoc}
      */

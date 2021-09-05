@@ -1,5 +1,9 @@
-
 <?php use yii\widgets\ActiveForm;
+
+$dispatcher = extraUserPrices(trim('dispatcher'));
+$accountant = extraUserPrices(trim('accountant'));
+$safety_specialist = extraUserPrices(trim('safety_specialist'));
+$driver = extraUserPrices(trim('driver'));
 
 if(!is_null($checkProfile)) : ?>
 <?php if($checkProfile['status'] == 'active') :
@@ -14,7 +18,6 @@ if(!is_null($checkProfile)) : ?>
     </div>
 <?php endif; ?>
 <?php endif; ?>
-
 
 <section class="content">
     <div class="container-fluid">
@@ -229,7 +232,7 @@ if(!is_null($checkProfile)) : ?>
                                                         </li>
                                                         <li class="list-inline-item">
                                                             <center>
-                                                            <img alt="Avatar" class="table-avatar" src="/web/dist/img/avatar4.png"><br> <?=$tarifUser['manager']?> manager
+                                                            <img alt="Avatar" class="table-avatar" src="/web/dist/img/avatar4.png"><br> <?=$tarifUser['driver']?> driver
                                                             </center>
                                                         </li>
                                                     </ul>
@@ -240,30 +243,34 @@ if(!is_null($checkProfile)) : ?>
                                                 </td>
 
                                             </tr>
-                                                <?php $form = ActiveForm::begin(); ?>
+                                                <?php $form = ActiveForm::begin(['action' =>['tariff/invoice']]); ?>
                                                 <!-- form modal  -->
-                                                <div class="modal fade bd-example-modal-lg<?=$id?>" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                                                <div class="modal fade bd-example-modal-lg<?=$id?>" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
                                                     <div class="modal-dialog modal-lg">
                                                         <div class="modal-content" style="padding: 30px">
                                                             <div class="container">
                                                                 <h3>Additional users to tariff</h3>
+                                                                <?= $form->field($aditionalUserModel, 'tariff')->hiddenInput(['value' => $tariff->id])->label(false) ?>
+
                                                                 <div class="row">
                                                                     <div class="col-md-6">
-                                                                        <?= $form->field($aditionalUserModel, 'dispatcher')->textInput(['value' => 0]) ?>
+                                                                        <?= $form->field($aditionalUserModel, 'dispatcher')->textInput()->input('number',['value'=>0])->label("Dispatcher 1x $$dispatcher") ?>
                                                                     </div>
                                                                     <div class="col-md-6">
-                                                                        <?= $form->field($aditionalUserModel, 'accountant')->textInput(['value' => 0]) ?>
+                                                                        <?= $form->field($aditionalUserModel, 'accountant')->textInput()->input('number',['value'=>0])->label("accountant 1x $$accountant") ?>
                                                                     </div>
                                                                 </div>
 
                                                                 <div class="row">
                                                                     <div class="col-md-6">
-                                                                        <?= $form->field($aditionalUserModel, 'safety')->textInput(['value' => 0]) ?>1x <?=extraUserPrices('safety_specialist')?>
+                                                                        <?= $form->field($aditionalUserModel, 'safety')->textInput()->input('number',['value'=>0])->label("safety 1x $$safety_specialist") ?>
                                                                     </div>
                                                                     <div class="col-md-6">
-                                                                        <?= $form->field($aditionalUserModel, 'driver')->textInput(['value' => 0]) ?>
+                                                                        <?= $form->field($aditionalUserModel, 'driver')->textInput()->input('number',['value'=>0])->label("driver 1x $$dispatcher") ?>
                                                                     </div>
                                                                 </div>
+                                                                <button class="btn btn-success">Go to invoice</button>
+                                                                <button type="button" data-dismiss="modal" class="btn btn-danger">Cancel</button>
                                                             </div>
                                                         </div>
                                                     </div>

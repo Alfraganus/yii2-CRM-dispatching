@@ -10,6 +10,7 @@ require(__DIR__ . '/../base/helpers/url.php');
 require(__DIR__ . '/../base/helpers/security.php');
 require(__DIR__ . '/../base/helpers/tools.php');
 require(__DIR__ . '/../base/helpers/user.php');
+require(__DIR__ . '/../base/helpers/global.php');
 
 
 $params = require __DIR__ . '/params.php';

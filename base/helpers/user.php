@@ -43,6 +43,13 @@ function company_name()
     return $company->company_name??'-';
 }
 
+function company_info()
+{
+    $user_id = current_user_id();
+    $company = \app\models\CompanyProfile::findOne(['user_id'=>$user_id]);
+    return $company;
+}
+
 function userRoles()
 {
     $roles = Yii::$app->authManager->getRoles();

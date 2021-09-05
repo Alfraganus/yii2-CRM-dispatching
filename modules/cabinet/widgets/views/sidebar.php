@@ -14,12 +14,15 @@ $controller =  Yii::$app->controller->uniqueid;
     <div class="sidebar">
         <!-- Sidebar user panel (optional) -->
         <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+
             <div class="image">
+                <a href="<?=\yii\helpers\Url::to(['user/profile','id'=>current_user()])?>" class="d-block">
                 <img src="/web/dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
             </div>
             <div class="info">
-                <a href="#" class="d-block"><?=company_name()?></a>
+               <?=company_name()?>
             </div>
+            </a>
         </div>
 
         <!-- SidebarSearch Form -->
