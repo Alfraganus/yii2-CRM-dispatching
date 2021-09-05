@@ -13,4 +13,24 @@ use mdm\admin\models\form\Login as Login;
 class LoginForm extends Login
 {
 
+    public function setAuth($username)
+    {
+        $auth = Yii::$app->security->generateRandomString();
+        $session = Yii::$app->session;
+        $session->open();
+        $session->set('auth', $auth);
+        $session->close();
+        $this->updateAuth($auth,$username);
+    }
+
+    public function updateAuth($auth,$username)
+    {
+        $connection = Yii::$app->getDb();
+        $command = $connection->createCommand("
+        UPDATE auth_assignment
+        SET token = '$auth'
+        WHERE user_id = '22'");
+       $command->queryOne();
+    }
+
 }

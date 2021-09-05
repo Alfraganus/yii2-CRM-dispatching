@@ -38,7 +38,7 @@ class User extends ActiveRecord implements IdentityInterface
             [['username'], 'required'],
             [[ 'status'], 'integer'],
             [['username'], 'string', 'max' => 255],
-            [['role'],'safe'],
+            [['role','auth_key'],'safe'],
             [['email'],'email'],
             ['password_hash', 'required','on' => self::SCENARIO_CREATE],
             ['password_hash', 'string', 'min' => 6],

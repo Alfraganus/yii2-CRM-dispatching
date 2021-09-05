@@ -112,9 +112,9 @@ class AuthController extends Controller
 
         $model = new LoginForm();
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
+            $model->setAuth($model->username);
             return $this->redirect(['cabinet/']);
         }
-
         $model->password = '';
         return $this->render('login', [
             'model' => $model,
