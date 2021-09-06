@@ -249,7 +249,7 @@ if(!is_null($checkProfile)) : ?>
                                                     <div class="modal-dialog modal-lg">
                                                         <div class="modal-content" style="padding: 30px">
                                                             <div class="container">
-                                                                <h3>Additional users to tariff</h3>
+                                                                <h3>Additional users for <?=$tariff->tariff_name?></h3>
                                                                 <?= $form->field($aditionalUserModel, 'tariff')->hiddenInput(['value' => $tariff->id])->label(false) ?>
 
                                                                 <div class="row">

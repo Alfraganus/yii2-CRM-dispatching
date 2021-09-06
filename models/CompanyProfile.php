@@ -39,7 +39,7 @@ class CompanyProfile extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['user_id','manager','driver','dispatcher','safety_specialist','accountant'], 'integer'],
+            [['user_id','manager','driver','dispatcher','safety_specialist','accountant','subscription_id'], 'integer'],
             [['company_name'], 'required'],
             [['owner_contact_info'], 'string'],
             [['company_name', 'address'], 'string', 'max' => 255],
@@ -61,6 +61,7 @@ class CompanyProfile extends \yii\db\ActiveRecord
             'company_name' => Yii::t('auth', 'Company Name'),
             'address' => Yii::t('auth', 'Address'),
             'phone' => Yii::t('auth', 'Phone'),
+            'subscription_id'=>Yii::t('auth', 'Subscription'),
             'owner_contact_info' => Yii::t('auth', 'Owner Contact Info'),
         ];
     }

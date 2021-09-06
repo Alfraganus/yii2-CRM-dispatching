@@ -2,6 +2,8 @@
 
 namespace app\modules\cabinet\controllers;
 
+use app\models\AdditionalUsersTable;
+use app\models\CompanyProfile;
 use app\models\Subscriptions;
 use Carbon\Carbon;
 use phpDocumentor\Reflection\DocBlock\Tags\Throws;
@@ -42,22 +44,20 @@ class TariffController extends Controller
             $session = Yii::$app->session;
             $session->open();
 
-            $selectedTariff = Tariffs::findOne($post['User']['tariff']);
             $invoice = time();
             $selectedAditionalUsers = array(
                 'dispatcher'=>$post['User']['dispatcher'],
                 'accountant'=>$post['User']['accountant'],
-                'safety'=>$post['User']['safety'],
+                'safety_specialist'=>$post['User']['safety'],
                 'driver'=>$post['User']['driver'],
             );
-            $tariffs = Tariffs::findOne(['active'=>Tariffs::ACTIVE]);
+            $selectedTariff = Tariffs::findOne(['id'=>$post['User']['tariff']]);
             $session->set('additionalUsers',$selectedAditionalUsers);
-            $session->set('tariff_id',$tariffs->id);
+            $session->set('tariff_id',$selectedTariff->id);
             return $this->render('invoice',[
                 'selectedTariff'=>$selectedTariff,
                 'additionalUsers'=>$selectedAditionalUsers,
                 'invoice'=>$invoice,
-                'tariff'=>$tariffs,
             ]);
         }
         else {
@@ -67,19 +67,47 @@ class TariffController extends Controller
 
     public function actionPayTariff()
     {
+        /*agar user hali tarifdagi vaqti tugamasdan, qayta tarif sotib olsa, osha tarifini tugayotgan vaqtidan boshqab qoshishi kerak!*/
+
         $session = Yii::$app->session;
-        if($post  = Yii::$app->request->post()) {
+        if ($post = Yii::$app->request->post()) {
+
             $users = $session->get('additionalUsers');
+            $keys = array_keys($users);
+            $values = array_values($users);
 
             if ($session->isActive) {
-            $tariff = Tariffs::findOne($session->get('tariff_id'));
+                /*userni subscriptioni kiritib olamiz*/
+                $tariff = Tariffs::findOne($session->get('tariff_id'));
                 $subscriptions = new Subscriptions();
-                $subscriptions->tariff_id =  $session->get('tariff_id');
+                $subscriptions->tariff_id = $session->get('tariff_id');
                 $subscriptions->company_id = current_user_id();
                 $subscriptions->subscription_start_date = Carbon::now();
                 $subscriptions->subscription_end_date = Carbon::now()->addMonths($tariff->months_quantity);
                 $subscriptions->overall_price = $session->get('overall_price');
                 $subscriptions->save(false);
+                /*tarifdan tashqari qoshimcha userlar olganda*/
+                foreach ($keys as $index => $key) {
+                    if($values[$index]>0) {
+                        $subscriptionAdditionalUsers = new AdditionalUsersTable();
+                        $subscriptionAdditionalUsers->subscription_id = $subscriptions->id;
+                        $subscriptionAdditionalUsers->role = $key;
+                        $subscriptionAdditionalUsers->quantity = $values[$index];
+                        $subscriptionAdditionalUsers->price =  extraUserPrices(trim($key))*$values[$index];
+                        $subscriptionAdditionalUsers->save(false);
+                    }
+                }
+                /*profilga active tarifini kiritib qoyamiz*/
+                $companyProfile = CompanyProfile::findOne(['user_id'=>current_user()]);
+                $companyProfile->free_trial = 0;
+                $companyProfile->subscription_id = $subscriptions->id;
+                $companyProfile->save(false);
+
+                /*saqlab olingan vaqtinchalik malumotlarni olib tashlaymiz*/
+                $session->remove('additionalUsers');
+                $session->remove('tariff_id');
+                $session->remove('overall_price');
+
                 return $this->redirect('/');
             }
 

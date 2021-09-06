@@ -80,9 +80,9 @@ $subtotal = 0;
                     <div class="text-95 text-secondary-d3">
                         <div class="row mb-2 mb-sm-0 py-25">
                             <div class="d-none d-sm-block col-1">#</div>
-                            <div class="col-9 col-sm-5"><?=$tariff->tariff_name??''?></div>
-                            <div class="d-none d-sm-block col-2"><?=$tariff->months_quantity??''?> month(s)</div>
-                            <div class="d-none d-sm-block col-2 text-95">$<?=$tariff->price??''; $subtotal+=$tariff->price?></div>
+                            <div class="col-9 col-sm-5"><?=$selectedTariff->tariff_name??''?></div>
+                            <div class="d-none d-sm-block col-2"><?=$selectedTariff->months_quantity??''?> month(s)</div>
+                            <div class="d-none d-sm-block col-2 text-95">$<?=$selectedTariff->price??''; $subtotal+=$selectedTariff->price?></div>
                         </div>
 
                         <?php if ($additionalUsers['dispatcher'] > 0): ?>
@@ -107,14 +107,14 @@ $subtotal = 0;
                                 </div>
                                 <?php endif; ?>
 
-                                <?php if ($additionalUsers['safety'] > 0): ?>
+                                <?php if ($additionalUsers['safety_specialist'] > 0): ?>
                                 <div class="text-95 text-secondary-d3">
                                     <div class="row mb-2 mb-sm-0 py-25">
                                         <div class="d-none d-sm-block col-1">#</div>
                                         <div class="col-9 col-sm-5">Additional safety specialist</div>
-                                        <div class="d-none d-sm-block col-2"><?= $additionalUsers['safety'] ?></div>
+                                        <div class="d-none d-sm-block col-2"><?= $additionalUsers['safety_specialist'] ?></div>
                                         <div class="d-none d-sm-block col-2 text-95">
-                                            $<?=$sprice = extraUserPrices(trim('safety_specialist'))* $additionalUsers['safety'];$subtotal+=$sprice?></div>
+                                            $<?=$sprice = extraUserPrices(trim('safety_specialist'))* $additionalUsers['safety_specialist'];$subtotal+=$sprice?></div>
                                     </div>
                                     <?php endif; ?>
 
@@ -146,13 +146,13 @@ $subtotal = 0;
                                     <span class="text-120 text-secondary-d1">$<?=number_format($subtotal,2)?></span>
                                 </div>
                             </div>
-                            <?php if($tariff['discount']>0): ?>
+                            <?php if($selectedTariff['discount']>0): ?>
                             <div class="row my-2">
                                 <div class="col-7 text-right">
-                                    Discount (<?=$tariff['discount']?>%)
+                                    Discount (<?=$selectedTariff['discount']?>%)
                                 </div>
                                 <div class="col-5">
-                                    <span class="text-110 text-secondary-d1">$<?= $discounted = get_percentage($subtotal,$tariff['discount'])?></span>
+                                    <span class="text-110 text-secondary-d1">$<?= $discounted = get_percentage($subtotal,$selectedTariff['discount'])?></span>
                                 </div>
                             </div>
                             <?php endif;?>

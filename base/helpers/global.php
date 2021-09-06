@@ -1,6 +1,38 @@
 <?php
 // Get current lang
 
+
+ function queryMaster($table, $is_plural, $condition = [])
+{
+    $select = 'one';
+    if ($is_plural) {
+        $select = 'all';
+    }
+    $query = (new \yii\db\Query())
+        ->select('*')
+        ->from($table);
+    if ($condition) {
+        $query->where($condition);
+    }
+    $query = $query->$select();
+    return $query;
+}
+
+
+function checkAuth()
+{
+    $currentAuth = Yii::$app->session->get('auth');
+    $token = queryMaster('auth_assignment', 'one', ['user_id' => current_user()]);
+    if ($currentAuth != $token[0]['token']) {
+        Yii::$app->session->remove('auth');
+        Yii::$app->user->logout();
+        Yii::$app->session->setFlash('success', 'Someone logged in from your account!');
+        return Yii::$app->getResponse()->redirect(array('/auth/login'));
+    }
+}
+
+
+
 function get_percentage($total, $number)
 {
     if ($total > 0) {
