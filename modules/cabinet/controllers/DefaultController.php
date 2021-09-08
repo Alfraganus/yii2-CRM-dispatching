@@ -29,4 +29,6 @@ class DefaultController extends Controller
         return $this->redirect(['/auth/login']);
     }
 
+
+
 }

@@ -121,6 +121,13 @@ class AuthController extends Controller
         ]);
     }
 
+    public function actionWarning()
+    {
+        return $this->render('warning_page');
+    }
+
+
+
     /**
      * Logout action.
      *

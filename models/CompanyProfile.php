@@ -75,4 +75,9 @@ class CompanyProfile extends \yii\db\ActiveRecord
     {
         return $this->hasOne(User::className(), ['id' => 'user_id']);
     }
+
+    public function getSubscription()
+    {
+        return $this->hasOne(Subscriptions::className(), ['id' => 'subscription_id']);
+    }
 }

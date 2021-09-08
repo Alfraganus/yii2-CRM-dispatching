@@ -11,6 +11,7 @@ require(__DIR__ . '/../base/helpers/security.php');
 require(__DIR__ . '/../base/helpers/tools.php');
 require(__DIR__ . '/../base/helpers/user.php');
 require(__DIR__ . '/../base/helpers/global.php');
+require(__DIR__ . '/../base/helpers/tariff.php');
 
 
 $params = require __DIR__ . '/params.php';
@@ -25,6 +26,7 @@ $config = [
         '@npm'   => '@vendor/npm-asset',
     ],
     'components' => [
+
         'i18n' => [
             'translations' => [
                 '*' => [
@@ -51,7 +53,8 @@ $config = [
         ],
         'user' => [
             'identityClass' => 'app\models\User',
-            'enableAutoLogin' => true,
+            'enableAutoLogin' => false,
+            'authTimeout'=>3000,  //Number of second to Automatic Logout if inactive
         ],
         'errorHandler' => [
             'errorAction' => 'site/error',
@@ -107,6 +110,7 @@ $config = [
         ],
         'cabinet' => [
             'class' => 'app\modules\cabinet\cabinet',
+
         ],
         'rbac' => [
             'class' => 'mdm\admin\Module',

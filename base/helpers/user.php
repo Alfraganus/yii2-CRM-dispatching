@@ -82,6 +82,11 @@ function current_user_profile($user_id = null)
 //    return \base\libs\Redis::getUserProfile($user_id);
 }
 
+function getUserRole()
+{
+   return array_keys(current_user_roles(current_user()))[0];
+}
+
 // Get current user roles
 function current_user_roles($user_id = null)
 {

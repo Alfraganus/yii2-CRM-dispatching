@@ -26,5 +26,9 @@ class cabinet extends \yii\base\Module
         }
         $this->layout = 'cabinet';
         checkAuth();
+
+        if(checkSubscription() == 'ended') {
+            return Yii::$app->response->redirect(array('auth/warning'));
+        }
     }
 }
