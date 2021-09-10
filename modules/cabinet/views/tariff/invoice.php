@@ -61,9 +61,9 @@ $subtotal = 0;
 
                             <div class="my-2"><i class="fa fa-circle text-blue-m2 text-xs mr-1"></i> <span class="text-600 text-90">ID:</span> #<?=$invoice?></div>
 
-                            <div class="my-2"><i class="fa fa-circle text-blue-m2 text-xs mr-1"></i> <span class="text-600 text-90">Issue Date:</span> <?=\Carbon\Carbon::now()->format('d-m-Y H:i:s')?></div>
+                            <div class="my-2"><i class="fa fa-circle text-blue-m2 text-xs mr-1"></i> <span class="text-600 text-90">Issue date: </span><span class="badge badge-success badge-pill px-25"><?=\Carbon\Carbon::now()->format('d-m-Y H:i:s')?></span></div>
 
-                            <div class="my-2"><i class="fa fa-circle text-blue-m2 text-xs mr-1"></i> <span class="text-600 text-90">Status:</span> <span class="badge badge-warning badge-pill px-25">Unpaid</span></div>
+                            <div class="my-2"><i class="fa fa-circle text-blue-m2 text-xs mr-1"></i> <span class="text-600 text-90">finishing data: </span> <span class="badge badge-warning badge-pill px-25"><?=$finishingDate?></span></div>
                         </div>
                     </div>
                     <!-- /.col -->

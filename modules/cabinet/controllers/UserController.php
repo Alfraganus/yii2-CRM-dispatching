@@ -2,6 +2,7 @@
 
 namespace app\modules\cabinet\controllers;
 
+use app\models\Subscriptions;
 use app\models\Tariffs;
 use app\models\User;
 use app\models\search\UserSearch;
@@ -55,13 +56,27 @@ class UserController extends DefaultController
         $getCurrentRole =  array_keys(current_user_roles(current_user()))[0];
         if ($getCurrentRole == 'cadmin') {
             $checkProfile = check_tariff(current_user());
+        } else {
+              throw new \yii\web\HttpException(401, 'You do not have permission for this page!');
         }
         $tariffs = Tariffs::findAll(['active'=>Tariffs::ACTIVE]);
         $aditionalUserModel = new User();
+        $companySubscription = Subscriptions::findOne(company_info()['subscription_id']);
+
+        $dispatcher = extraUserPrices(trim('dispatcher'));
+        $accountant = extraUserPrices(trim('accountant'));
+        $safety_specialist = extraUserPrices(trim('safety_specialist'));
+        $driver = extraUserPrices(trim('driver'));
+
         return $this->render('user_profile',[
             'checkProfile'=>$checkProfile,
             'tariffs'=>$tariffs,
             'aditionalUserModel'=>$aditionalUserModel,
+            'companySubscription'=>$companySubscription,
+            'dispatcher'=>$dispatcher,
+            'accountant'=>$accountant,
+            'safety_specialist'=>$safety_specialist,
+            'driver'=>$driver,
         ]);
     }
 

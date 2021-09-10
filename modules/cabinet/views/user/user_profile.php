@@ -1,9 +1,7 @@
 <?php use yii\widgets\ActiveForm;
 
-$dispatcher = extraUserPrices(trim('dispatcher'));
-$accountant = extraUserPrices(trim('accountant'));
-$safety_specialist = extraUserPrices(trim('safety_specialist'));
-$driver = extraUserPrices(trim('driver'));
+
+
 
 if(!is_null($checkProfile)) : ?>
 <?php if($checkProfile['status'] == 'active') :
@@ -28,72 +26,62 @@ if(!is_null($checkProfile)) : ?>
                 <div class="card card-primary card-outline">
                     <div class="card-body box-profile">
                         <div class="text-center">
-                            <img class="profile-user-img img-fluid img-circle"
-                                 src="/web/dist/img/user4-128x128.jpg"
+                            <img class="profile-user-img "
+                                 src="/web/images/company.png"
                                  alt="User profile picture">
                         </div>
 
-                        <h3 class="profile-username text-center">Nina Mcintire</h3>
+                        <h3 class="profile-username text-center"><?=company_info()['company_name']?></h3>
 
-                        <p class="text-muted text-center">Software Engineer</p>
+                        <p class="text-muted text-center"><?=company_info()['address']?></p>
 
                         <ul class="list-group list-group-unbordered mb-3">
                             <li class="list-group-item">
-                                <b>Followers</b> <a class="float-right">1,322</a>
+                                <b>Contact:</b> <a class="float-right"><?=company_info()['owner_contact_info']?></a>
                             </li>
                             <li class="list-group-item">
-                                <b>Following</b> <a class="float-right">543</a>
+                                <b>Phone</b> <a class="float-right"><?=company_info()['phone']?></a>
                             </li>
                             <li class="list-group-item">
-                                <b>Friends</b> <a class="float-right">13,287</a>
+                                <b>email:</b> <a class="float-right"><?=Yii::$app->user->identity->email??''?></a>
                             </li>
                         </ul>
-
-                        <a href="#" class="btn btn-primary btn-block"><b>Follow</b></a>
                     </div>
                     <!-- /.card-body -->
                 </div>
                 <!-- /.card -->
 
                 <!-- About Me Box -->
+                <?php if(!empty(company_info()['subscription_id'])): ?>
                 <div class="card card-primary">
                     <div class="card-header">
-                        <h3 class="card-title">About Me</h3>
+                        <h3 class="card-title">Tariff info</h3>
                     </div>
                     <!-- /.card-header -->
                     <div class="card-body">
-                        <strong><i class="fas fa-book mr-1"></i> Education</strong>
+                        <strong><i class="fas fa-book mr-1"></i> Tariff name</strong>
 
                         <p class="text-muted">
-                            B.S. in Computer Science from the University of Tennessee at Knoxville
+                           <?=$companySubscription->tariff->tariff_name??'data not found!'?>
                         </p>
 
                         <hr>
 
-                        <strong><i class="fas fa-map-marker-alt mr-1"></i> Location</strong>
+                        <strong><i class="fas fa-map-marker-alt mr-1"></i> Current subscription start date</strong>
 
-                        <p class="text-muted">Malibu, California</p>
-
-                        <hr>
-
-                        <strong><i class="fas fa-pencil-alt mr-1"></i> Skills</strong>
-
-                        <p class="text-muted">
-                            <span class="tag tag-danger">UI Design</span>
-                            <span class="tag tag-success">Coding</span>
-                            <span class="tag tag-info">Javascript</span>
-                            <span class="tag tag-warning">PHP</span>
-                            <span class="tag tag-primary">Node.js</span>
-                        </p>
+                        <p class="text-muted">  <?=date('d-m-Y H:i',strtotime($companySubscription->subscription_start_date))??'data not found!'?></p>
 
                         <hr>
 
-                        <strong><i class="far fa-file-alt mr-1"></i> Notes</strong>
+                        <strong><i class="fas fa-pencil-alt mr-1"></i>  Current subscription finishing date</strong>
 
-                        <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam fermentum enim neque.</p>
+                        <p class="text-muted">  <?=date('d-m-Y H:i',strtotime($companySubscription->subscription_end_date))??'data not found!'?></p>
+
+
                     </div>
                     <!-- /.card-body -->
                 </div>
+                <?php endif; ?>
                 <!-- /.card -->
             </div>
             <!-- /.col -->
@@ -110,65 +98,59 @@ if(!is_null($checkProfile)) : ?>
                             <div class="active tab-pane" id="activity">
                                 <!-- Post -->
                                 <div class="card-body p-0">
-                                    <table class="table table-striped projects">
-                                        <thead>
-                                        <tr>
-                                            <th style="width: 1%">
-                                                #
-                                            </th>
-                                            <th style="width: 30%">
-                                                Project Name
-                                            </th>
-                                            <th style="width: 50%">
-                                                Staff included
-                                            </th>
+                                    <div class="card-body p-0">
+                                        <table class="table table-striped projects">
+                                            <thead>
+                                            <tr>
+                                                <th style="width: 30%">
+                                                   Current tariff
+                                                </th>
+                                                <th style="width: 50%">
+                                                    Staff included
+                                                </th>
 
-                                            <th style="width: 30%" class="text-center">
-                                                Status
-                                            </th>
-                                            <th style="width: 20%">
-                                            </th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        <tr>
-                                            <td>
-                                                #
-                                            </td>
-                                            <td>
-                                                <a>
-                                                    AdminLTE v3
-                                                </a>
-                                                <br/>
-                                                <small>
-                                                    Created 01.01.2019
-                                                </small>
-                                            </td>
-                                            <td>
-                                                <ul class="list-inline">
-                                                    <li class="list-inline-item">
-                                                       <center><img alt="Avatar" class="table-avatar" src="/web/dist/img/avatar.png"><br> 1 accountant</center>
-                                                    </li>
-                                                    <li class="list-inline-item">
-                                                         <img alt="Avatar" class="table-avatar" src="/web/dist/img/avatar2.png"><br> 1 accountant
-                                                    </li>
-                                                    <li class="list-inline-item">
-                                                        <img alt="Avatar" class="table-avatar" src="/web/dist/img/avatar3.png"><br> 1 accountant
-                                                    </li>
-                                                    <li class="list-inline-item">
-                                                       <img alt="Avatar" class="table-avatar" src="/web/dist/img/avatar4.png"><br> 1 accountant
-                                                    </li>
-                                                </ul>
-                                            </td>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>
+                                                        <a>
+                                                            <?=$companySubscription->tariff->tariff_name??'data not found!'?>
+                                                        </a>
+                                                        <br/>
+                                                        <small>
+                                                            <?=\Carbon\Carbon::now()->diffInDays($companySubscription->subscription_end_date)?> days left
+                                                        </small>
+                                                    </td>
+                                                    <td colspan="2">
+                                                        <ul class="list-inline">
+                                                            <li class="list-inline-item">
+                                                                <center>
+                                                                            <img alt="Avatar" class="table-avatar" src="/web/dist/img/avatar.png"><br> <?= allTariffUsers($companySubscription->id,$companySubscription->tariff->id,'accountant')?> accountant
+                                                                </center>
+                                                            </li>
+                                                            <li class="list-inline-item">
+                                                                <center>
+                                                                    <img alt="Avatar" class="table-avatar" src="/web/dist/img/avatar2.png"><br> <?= allTariffUsers($companySubscription->id,$companySubscription->tariff->id,'safety_specialist')?> safety specialist
+                                                                </center>
+                                                            </li>
+                                                            <li class="list-inline-item">
+                                                                <center>
+                                                                    <img alt="Avatar" class="table-avatar" src="/web/dist/img/avatar3.png"><br>  <?= allTariffUsers($companySubscription->id,$companySubscription->tariff->id,'dispatcher')?> dispatcher
+                                                                </center>
+                                                            </li>
+                                                            <li class="list-inline-item">
+                                                                <center>
+                                                                    <img alt="Avatar" class="table-avatar" src="/web/dist/img/avatar4.png"><br>  <?= allTariffUsers($companySubscription->id,$companySubscription->tariff->id,'driver')?>driver
+                                                                </center>
+                                                            </li>
+                                                        </ul>
+                                                    </td>
+                                                </tr>
 
-                                            <td class="project-state">
-                                                <span class="badge badge-success">Success</span>
-                                            </td>
-
-                                        </tr>
-
-                                        </tbody>
-                                    </table>
+                                            </tbody>
+                                        </table>
+                                    </div>
                                 </div>
 
                             </div>

@@ -10,6 +10,22 @@ function tariffUsers($tariff_id)
     return $tariff;
 }
 
+function allTariffUsers($subscription_id, $tariff_id, $role_name)
+{
+    $tariffAllowedUser = (\app\models\Tariffs::findOne($tariff_id))->$role_name;
+    $additionalBoughtUser = \app\models\AdditionalUsersTable::findOne(
+        [
+            'subscription_id' => $subscription_id,
+            'role' => $role_name,
+        ]
+    );
+    if (!empty($additionalBoughtUser)) {
+        return $tariffAllowedUser + $additionalBoughtUser->quantity;
+    } else {
+        return $tariffAllowedUser;
+    }
+}
+
 function extraUserPrices($key)
 {
     $extraUserPrice = \app\models\UnitPrices::findOne(['unit_key'=>$key]);

@@ -43,6 +43,22 @@ class TariffController extends Controller
         if($post  = Yii::$app->request->post()) {
             $session = Yii::$app->session;
             $session->open();
+            $selectedTariff = Tariffs::findOne(['id'=>$post['User']['tariff']]);
+            $selectedTariffMonth = $selectedTariff->months_quantity;
+
+            $currentSubInfo = Subscriptions::findOne([
+                'id'=>company_info()['subscription_id'],
+                'company_id'=>company_info()['user_id'],
+            ]);
+            if(!empty(company_info()['subscription_id']) && $currentSubInfo->subscription_end_date > Carbon::now()) {
+                $endingDate = strtotime("+$selectedTariffMonth months",strtotime($currentSubInfo->subscription_end_date));
+                $session->set('tariff_finishing_date',date('Y-m-d H:i:s',$endingDate));
+                $finishingDate =date('d-m-Y H:i:s',$endingDate);
+            } else {
+                $endingDate =  Carbon::now()->addMonths($selectedTariff->months_quantity);
+                $session->set('tariff_finishing_date',date('Y-m-d H:i:s',$endingDate));
+                $finishingDate = $endingDate->format('d-m-Y H:i:s');
+            }
 
             $invoice = time();
             $selectedAditionalUsers = array(
@@ -51,13 +67,14 @@ class TariffController extends Controller
                 'safety_specialist'=>$post['User']['safety'],
                 'driver'=>$post['User']['driver'],
             );
-            $selectedTariff = Tariffs::findOne(['id'=>$post['User']['tariff']]);
+
             $session->set('additionalUsers',$selectedAditionalUsers);
             $session->set('tariff_id',$selectedTariff->id);
             return $this->render('invoice',[
                 'selectedTariff'=>$selectedTariff,
                 'additionalUsers'=>$selectedAditionalUsers,
                 'invoice'=>$invoice,
+                'finishingDate'=>$finishingDate,
             ]);
         }
         else {
@@ -83,7 +100,7 @@ class TariffController extends Controller
                 $subscriptions->tariff_id = $session->get('tariff_id');
                 $subscriptions->company_id = current_user_id();
                 $subscriptions->subscription_start_date = Carbon::now();
-                $subscriptions->subscription_end_date = Carbon::now()->addMonths($tariff->months_quantity);
+                $subscriptions->subscription_end_date = $session->get('tariff_finishing_date');
                 $subscriptions->overall_price = $session->get('overall_price');
                 $subscriptions->save(false);
                 /*tarifdan tashqari qoshimcha userlar olganda*/
@@ -107,6 +124,7 @@ class TariffController extends Controller
                 $session->remove('additionalUsers');
                 $session->remove('tariff_id');
                 $session->remove('overall_price');
+                $session->remove('tariff_finishing_date');
 
                 return $this->redirect('/');
             }
