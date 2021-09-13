@@ -1,8 +1,6 @@
 <?php use yii\widgets\ActiveForm;
 
 
-
-
 if(!is_null($checkProfile)) : ?>
 <?php if($checkProfile['status'] == 'active') :
     $daysLeft = $checkProfile['leftDays'];
@@ -17,9 +15,18 @@ if(!is_null($checkProfile)) : ?>
 <?php endif; ?>
 <?php endif; ?>
 
+<?php if (Yii::$app->session->hasFlash('success')): ?>
+    <div class="alert alert-warning alert-dismissable">
+        <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
+        <h4><i class="icon fa fa-check"></i><?= Yii::$app->session->getFlash('success') ?>!</h4>
+    </div>
+<?php endif; ?>
+
+
 <section class="content">
     <div class="container-fluid">
         <div class="row">
+
             <div class="col-md-3">
 
                 <!-- Profile Image -->
@@ -144,7 +151,10 @@ if(!is_null($checkProfile)) : ?>
                                                                     <img alt="Avatar" class="table-avatar" src="/web/dist/img/avatar4.png"><br>  <?= allTariffUsers($companySubscription->id,$companySubscription->tariff->id,'driver')?>driver
                                                                 </center>
                                                             </li>
+
                                                         </ul>
+                                                    <td class="project-state">
+                                                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg-au">Buy additional users</button>
                                                     </td>
                                                 </tr>
 
@@ -278,6 +288,40 @@ if(!is_null($checkProfile)) : ?>
         </div>
         <!-- /.row -->
     </div><!-- /.container-fluid -->
+
+    <?php $form = ActiveForm::begin(['action' =>['tariff/buy-additional-users']]); ?>
+    <!-- form modal  -->
+    <div class="modal fade bd-example-modal-lg-au" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content" style="padding: 30px">
+                <div class="container">
+                    <h3>Additional users for <?=$tariff->tariff_name?></h3>
+                    <?= $form->field($aditionalUserModel, 'tariff')->hiddenInput(['value' => $tariff->id])->label(false) ?>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <?= $form->field($aditionalUserModel, 'dispatcher')->textInput()->input('number',['value'=>0])->label("Dispatcher 1x $".extraUserPrices('dispatcher',true)) ?>
+                        </div>
+                        <div class="col-md-6">
+                            <?= $form->field($aditionalUserModel, 'accountant')->textInput()->input('number',['value'=>0])->label("accountant 1x $".extraUserPrices('accountant',true)) ?>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <?= $form->field($aditionalUserModel, 'safety')->textInput()->input('number',['value'=>0])->label("safety 1x $".extraUserPrices('safety_specialist',true)) ?>
+                        </div>
+                        <div class="col-md-6">
+                            <?= $form->field($aditionalUserModel, 'driver')->textInput()->input('number',['value'=>0])->label("driver 1x $".extraUserPrices('driver',true)) ?>
+                        </div>
+                    </div>
+                    <button class="btn btn-success">Go to invoice</button>
+                    <button type="button" data-dismiss="modal" class="btn btn-danger">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <?php ActiveForm::end(); ?>
 </section>
 
 

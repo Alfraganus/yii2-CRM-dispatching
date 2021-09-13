@@ -26,11 +26,31 @@ function allTariffUsers($subscription_id, $tariff_id, $role_name)
     }
 }
 
-function extraUserPrices($key)
+function extraUserPrices($key,$in_tariff=false)
 {
     $extraUserPrice = \app\models\UnitPrices::findOne(['unit_key'=>$key]);
+
+    if($in_tariff) {
+        $subscription = \app\models\Subscriptions::findOne(company_info()['subscription_id']);
+        $tariff = \app\models\Tariffs::findOne($subscription->tariff_id);
+        $overallDays = $tariff->months_quantity*30;
+        $daysLeft = Carbon::now()->diffInDays($subscription->subscription_end_date);
+
+        $quarterPeriod = intval( $overallDays / 4);
+        $halfPeriod =  intval($overallDays /2);
+
+        if($daysLeft  <= $quarterPeriod) {
+            return number_format($extraUserPrice->unit_value / 4,2);
+        } elseif($daysLeft <= $halfPeriod) {
+            return number_format($extraUserPrice->unit_value / 2,2);
+        } else {
+            return number_format($extraUserPrice->unit_value,2);
+        }
+    }
+
     return $extraUserPrice->unit_value;
 }
+
 
 
 function check_tariff($user_id)

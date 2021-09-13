@@ -68,6 +68,8 @@ class UserController extends DefaultController
         $safety_specialist = extraUserPrices(trim('safety_specialist'));
         $driver = extraUserPrices(trim('driver'));
 
+
+
         return $this->render('user_profile',[
             'checkProfile'=>$checkProfile,
             'tariffs'=>$tariffs,
@@ -77,6 +79,7 @@ class UserController extends DefaultController
             'accountant'=>$accountant,
             'safety_specialist'=>$safety_specialist,
             'driver'=>$driver,
+
         ]);
     }
 

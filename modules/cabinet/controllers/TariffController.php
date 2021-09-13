@@ -82,12 +82,46 @@ class TariffController extends Controller
         }
     }
 
+    public function actionBuyAdditionalUsers()
+    {
+        if ($post = Yii::$app->request->post()) {
+            $selectedTariff = Tariffs::findOne(['id'=>company_info()['subscription_id']]);
+            $currentSubscription = Subscriptions::findOne(company_info()['subscription_id']);
+            $selectedAditionalUsers = array(
+                'dispatcher'=>$post['User']['dispatcher'],
+                'accountant'=>$post['User']['accountant'],
+                'safety_specialist'=>$post['User']['safety'],
+                'driver'=>$post['User']['driver'],
+            );
+
+            if($selectedAditionalUsers['dispatcher'] == 0 &&
+            $selectedAditionalUsers['accountant'] == 0 &&
+            $selectedAditionalUsers['safety_specialist'] == 0 &&
+            $selectedAditionalUsers['driver'] == 0)
+            {
+                Yii::$app->session->setFlash('success','You should add at least 1 user');
+                return $this->redirect(Yii::$app->request->referrer);
+            }
+
+            return $this->render('invoice_in_tariff_users',[
+                'selectedTariff'=>$selectedTariff,
+                'additionalUsers'=>$selectedAditionalUsers,
+                'currentSubscription'=>$currentSubscription,
+            ]);
+
+        } else {
+            throw new \yii\web\HttpException(401, 'Request must be from POST!');
+        }
+    }
+
+
+
     public function actionPayTariff()
     {
-        /*agar user hali tarifdagi vaqti tugamasdan, qayta tarif sotib olsa, osha tarifini tugayotgan vaqtidan boshqab qoshishi kerak!*/
+    /*agar user hali tarifdagi vaqti tugamasdan, qayta tarif sotib olsa, osha tarifini tugayotgan vaqtidan boshqab qoshishi kerak!*/
 
-        $session = Yii::$app->session;
-        if ($post = Yii::$app->request->post()) {
+    $session = Yii::$app->session;
+    if ($post = Yii::$app->request->post()) {
 
             $users = $session->get('additionalUsers');
             $keys = array_keys($users);
@@ -129,6 +163,37 @@ class TariffController extends Controller
                 return $this->redirect('/');
             }
 
+        }
+    }
+
+    public function actionPayAdditionalUser()
+    {
+        if ($post = Yii::$app->request->post()) { //selectedAditionalUsers
+            $session = Yii::$app->session;
+            foreach ($session->get('selectedAditionalUsers') as $key => $value)
+            {
+                if($value > 0)
+                {
+                    $subscriptionAdditionalUsers = AdditionalUsersTable::findOne([
+                        'subscription_id'=>company_info()['subscription_id'],
+                        'role'=>$key
+                    ]);
+                    if(empty($subscriptionAdditionalUsers)) {
+                        $subscriptionAdditionalUsers2 = new AdditionalUsersTable();
+                        $subscriptionAdditionalUsers2->subscription_id = company_info()['subscription_id'];
+                        $subscriptionAdditionalUsers2->role = $key;
+                        $subscriptionAdditionalUsers2->quantity= $value;
+                        $subscriptionAdditionalUsers2->price = extraUserPrices(trim($key),false) * $value;
+                        $subscriptionAdditionalUsers2->save(false);
+                    } else {
+                        $subscriptionAdditionalUsers->quantity+= $value;
+                        $subscriptionAdditionalUsers->price += extraUserPrices(trim($key),false) * $value;
+                        $subscriptionAdditionalUsers->save(false);
+                    }
+                }
+            }
+            $session->remove('selectedAditionalUsers');
+            return $this->redirect(['user/profile']);
         }
     }
 
