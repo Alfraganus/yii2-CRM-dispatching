@@ -1,5 +1,14 @@
 <?php
 
+function getCompanyTariff()
+{
+    $subscription_id = company_info()['subscription_id'];
+    $subscription = \app\models\Subscriptions::findOne($subscription_id);
+    return $subscription->tariff_id;
+}
+
+
+
 function checkSubscription()
 {
     $checkIfCompany = \app\models\CompanyProfile::find()->where(['user_id' => current_user()]);

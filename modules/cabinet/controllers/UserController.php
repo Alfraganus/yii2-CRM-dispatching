@@ -68,8 +68,6 @@ class UserController extends DefaultController
         $safety_specialist = extraUserPrices(trim('safety_specialist'));
         $driver = extraUserPrices(trim('driver'));
 
-
-
         return $this->render('user_profile',[
             'checkProfile'=>$checkProfile,
             'tariffs'=>$tariffs,
@@ -95,6 +93,7 @@ class UserController extends DefaultController
     {
         return $this->render('view', [
             'model' => $this->findModel($id),
+            'userProfile' =>  UserProfile::findOne(['user_id'=>$id])
         ]);
     }
 
@@ -103,25 +102,41 @@ class UserController extends DefaultController
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
+    public function checkMaximumUserAvaiblability($role)
+    {
+        /*writing here it*/
+    }
+
+
     public function actionCreate()
     {
         $model = new User();
         $userProfile = new UserProfile();
         $model->scenario = User::SCENARIO_CREATE;
+
         if ($model->load(Yii::$app->request->post()) && $userProfile->load(Yii::$app->request->post())) {
             $transaction = Yii::$app->getDb()->beginTransaction();
             try {
-                if ($user = $model->signup($model->password_hash)) {
-                    $role = Yii::$app->authManager->getRole($model->role);
-                    Yii::$app->authManager->assign($role,$user->id);
+               $amountOfUsersCurrently = countUserByRole(company_info()['user_id'],$model->role);
+               $maximumAllowedUser = allTariffUsers(company_info()['subscription_id'],getCompanyTariff(),$model->role);
+               if ($amountOfUsersCurrently > $maximumAllowedUser) {
+                   Yii::$app->session->setFlash('danger',  Yii::t('user','The limit for selecter role has been reached, please buy more users for the selected type!'),true);
+                    return $this->redirect(Yii::$app->request->referrer);
 
-                    $userProfile->company_id =current_user_id();
-                    $userProfile->user_id = $user->id;
-                    $userProfile->save();
-                    $transaction->commit();
-                    Yii::$app->session->setFlash('success', Yii::t('user','User has been created successfully!'));
-                }
-                return $this->redirect(['user/']);
+               } else {
+                   if ($user = $model->signup($model->password_hash)) {
+                       $role = Yii::$app->authManager->getRole($model->role);
+                       Yii::$app->authManager->assign($role,$user->id);
+
+                       $userProfile->company_id =current_user_id();
+                       $userProfile->user_id = $user->id;
+                       $userProfile->save();
+                       $transaction->commit();
+                       Yii::$app->session->setFlash('success', Yii::t('user','User has been created successfully!'));
+                   }
+                   return $this->redirect(['user/']);
+               }
+
             }catch (DomainException $exception){
                 $transaction->rollBack();
                 Yii::$app->session->setFlash('error', $exception->getMessage());
@@ -145,12 +160,15 @@ class UserController extends DefaultController
     {
         $model = $this->findModel($id);
 
-        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
+        $userProfile =  UserProfile::findOne(['user_id'=>$id]);
+
+        if ($model->load(Yii::$app->request->post()) && $userProfile->load(Yii::$app->request->post()) && $model->save() &&  $userProfile->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
         return $this->render('update', [
             'model' => $model,
+            'userProfile' => $userProfile,
         ]);
     }
 

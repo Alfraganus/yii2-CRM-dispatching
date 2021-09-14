@@ -31,8 +31,32 @@ $this->params['breadcrumbs'][] = $this->title;
         'attributes' => [
             'id',
             'username',
-            'email:email',
-            'status',
+            [
+                'attribute' => 'name',
+                'value' => function () use ($userProfile) {
+                    return $userProfile->name;
+                },
+            ],
+
+        [
+            'attribute' => 'surname',
+            'value' => function () use ($userProfile) {
+                return $userProfile->surname;
+            },
+        ],
+        [
+            'attribute' => 'phone',
+            'value' => function () use ($userProfile) {
+                return $userProfile->phone;
+            },
+        ],
+        [
+            'attribute' => 'address',
+            'value' => function () use ($userProfile) {
+                return $userProfile->address;
+            },
+        ],
+        'email:email',
         ],
     ]) ?>
 

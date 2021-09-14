@@ -26,6 +26,19 @@ function allTariffUsers($subscription_id, $tariff_id, $role_name)
     }
 }
 
+function countUserByRole($company_id,$role)
+{
+     $userCount =(new \yii\db\Query())
+         ->select('*')
+         ->from('user_profile')
+         ->leftJoin('auth_assignment','auth_assignment.user_id = user_profile.user_id')
+         ->where(['company_id'=>$company_id])
+         ->andWhere(['auth_assignment.item_name'=>$role])
+         ->count();
+
+     return $userCount;
+}
+
 function extraUserPrices($key,$in_tariff=false)
 {
     $extraUserPrice = \app\models\UnitPrices::findOne(['unit_key'=>$key]);

@@ -29,6 +29,13 @@ $this->beginPage(); ?>
     <div class="content-wrapper">
         <div class="content-header">
             <div class="container-fluid">
+                <!--getting all flashes-->
+                <?php foreach(Yii::$app->session->getAllFlashes() as $type => $message): ?>
+                    <div class="alert alert-<?=$type?>">
+                        <strong><?= $message ?>!</strong>
+                    </div>
+                <?php endforeach ?>
+
                 <?= $content ?>
             </div>
         </div>
