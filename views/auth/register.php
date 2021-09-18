@@ -13,8 +13,8 @@ $userProfile->isNewRecord==1 ? $userProfile->free_trial=1:$userProfile->free_tri
 <div class="container">
     <div class="card card-login mx-auto text-center bg-dark">
         <div class="card-header mx-auto bg-dark">
-            <span> <img src="https://amar.vote/assets/img/amarVotebd.png" class="w-75" alt="Logo"> </span><br/>
-            <span class="logo_title mt-5"> Registration Dashboard </span>
+            <span> <img src="/web/images/logo_white.png" class="w-75" alt="Logo"> </span><br/>
+            <span class="logo_title mt-5"> Registration board </span>
 
         </div>
         <div class="card-body">
