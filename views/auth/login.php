@@ -12,8 +12,8 @@ use yii\widgets\ActiveForm;
 <div class="container">
     <div class="card card-login mx-auto text-center bg-dark">
         <div class="card-header mx-auto bg-dark">
-            <span> <img src="https://amar.vote/assets/img/amarVotebd.png" class="w-75" alt="Logo"> </span><br/>
-            <span class="logo_title mt-5"> Registration Dashboard </span>
+            <span> <img src="/web/images/logo_white.png" class="w-75" alt="Logo"> </span><br/>
+            <span class="logo_title mt-5"> Access board </span>
             <?php if(Yii::$app->session->hasFlash('success')): ?>
                 <div class="alert alert-warning">
                     <strong>Warning! </strong>  Someone has logged in from this account

@@ -56,7 +56,7 @@ class TariffController extends Controller
                 $finishingDate =date('d-m-Y H:i:s',$endingDate);
             } else {
                 $endingDate =  Carbon::now()->addMonths($selectedTariff->months_quantity);
-                $session->set('tariff_finishing_date',date('Y-m-d H:i:s',$endingDate));
+                $session->set('tariff_finishing_date',$endingDate->format('Y-m-d H:i:s'));
                 $finishingDate = $endingDate->format('d-m-Y H:i:s');
             }
 
@@ -160,7 +160,7 @@ class TariffController extends Controller
                 $session->remove('overall_price');
                 $session->remove('tariff_finishing_date');
 
-                return $this->redirect('/');
+                return $this->redirect(['user/profile']);
             }
 
         }

@@ -15,13 +15,6 @@ if(!is_null($checkProfile)) : ?>
 <?php endif; ?>
 <?php endif; ?>
 
-<?php if (Yii::$app->session->hasFlash('success')): ?>
-    <div class="alert alert-warning alert-dismissable">
-        <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
-        <h4><i class="icon fa fa-check"></i><?= Yii::$app->session->getFlash('success') ?>!</h4>
-    </div>
-<?php endif; ?>
-
 
 <section class="content">
     <div class="container-fluid">
@@ -104,6 +97,7 @@ if(!is_null($checkProfile)) : ?>
                         <div class="tab-content">
                             <div class="active tab-pane" id="activity">
                                 <!-- Post -->
+                                <?php if (!empty(company_info()['subscription_id'])):?>
                                 <div class="card-body p-0">
                                     <div class="card-body p-0">
                                         <table class="table table-striped projects">
@@ -162,6 +156,15 @@ if(!is_null($checkProfile)) : ?>
                                         </table>
                                     </div>
                                 </div>
+                                <?php else: ?>
+                                    <div class="card-body p-0">
+                                        <div class="card-body p-0">
+                                            <div class="alert alert-danger" role="alert">
+                                             You are currently using trial version
+                                            </div>
+                                        </div>
+                                    </div>
+                                <?php endif; ?>
 
                             </div>
                             <!-- /.tab-pane -->

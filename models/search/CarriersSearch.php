@@ -4,12 +4,12 @@ namespace app\models\search;
 
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\models\Brokers;
+use app\models\Cariers;
 
 /**
- * BrokerssSearch represents the model behind the search form of `app\models\Brokers`.
+ * CarriersSearch represents the model behind the search form of `app\models\Cariers`.
  */
-class BrokersSearch extends Brokers
+class CarriersSearch extends Cariers
 {
     /**
      * {@inheritdoc}
@@ -18,7 +18,7 @@ class BrokersSearch extends Brokers
     {
         return [
             [['id', 'status', 'created_by', 'updated_by'], 'integer'],
-            [['broker_name', 'broker_state', 'broker_city', 'broker_zip', 'broker_phone', 'broker_fax', 'broker_email', 'broker_contact_person'], 'safe'],
+            [['carrier_name', 'carrier_info'], 'safe'],
         ];
     }
 
@@ -40,7 +40,7 @@ class BrokersSearch extends Brokers
      */
     public function search($params)
     {
-        $query = Brokers::find();
+        $query = Cariers::find();
 
         // add conditions that should always apply here
 
@@ -64,14 +64,8 @@ class BrokersSearch extends Brokers
             'updated_by' => $this->updated_by,
         ]);
 
-        $query->andFilterWhere(['like', 'broker_name', $this->broker_name])
-            ->andFilterWhere(['like', 'broker_state', $this->broker_state])
-            ->andFilterWhere(['like', 'broker_city', $this->broker_city])
-            ->andFilterWhere(['like', 'broker_zip', $this->broker_zip])
-            ->andFilterWhere(['like', 'broker_phone', $this->broker_phone])
-            ->andFilterWhere(['like', 'broker_fax', $this->broker_fax])
-            ->andFilterWhere(['like', 'broker_email', $this->broker_email])
-            ->andFilterWhere(['like', 'broker_contact_person', $this->broker_contact_person]);
+        $query->andFilterWhere(['like', 'carrier_name', $this->carrier_name])
+            ->andFilterWhere(['like', 'carrier_info', $this->carrier_info]);
 
         return $dataProvider;
     }
