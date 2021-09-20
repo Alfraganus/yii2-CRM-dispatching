@@ -16,11 +16,6 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'carrier_info')->textarea(['rows' => 6]) ?>
 
-    <?= $form->field($model, 'status')->textInput() ?>
-
-    <?= $form->field($model, 'created_by')->textInput() ?>
-
-    <?= $form->field($model, 'updated_by')->textInput() ?>
 
     <div class="form-group">
         <?= Html::submitButton(Yii::t('carrier', 'Save'), ['class' => 'btn btn-success']) ?>

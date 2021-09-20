@@ -30,9 +30,7 @@ $this->params['breadcrumbs'][] = $this->title;
         'model' => $model,
         'attributes' => [
             'broker_name',
-            'broker_state',
-            'broker_city',
-            'broker_zip',
+            'broker_address',
             'broker_phone',
             'broker_fax',
             'broker_email:email',

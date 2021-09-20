@@ -27,9 +27,7 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => 'yii\grid\SerialColumn'],
 
             'broker_name',
-            'broker_state',
-            'broker_city',
-            'broker_zip',
+            'broker_address',
             'broker_phone',
             'broker_fax',
             'broker_email:email',

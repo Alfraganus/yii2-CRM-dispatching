@@ -14,9 +14,8 @@ use yii\helpers\ArrayHelper;
  *
  * @property int $id
  * @property string|null $broker_name
- * @property string|null $broker_state
- * @property string|null $broker_city
- * @property string|null $broker_zip
+ * @property string|null $broker_address
+ * @property string|null $mc
  * @property string|null $broker_phone
  * @property string|null $broker_fax
  * @property string|null $broker_email
@@ -51,7 +50,7 @@ class Brokers extends \yii\db\ActiveRecord
             [['phone','phone_extention','phone_direct_line','cell_phone','email'], 'safe'],
             [['broker_contact_person'], 'string'],
             [['status', 'created_by', 'updated_by'], 'integer'],
-            [['broker_name', 'broker_state', 'broker_city', 'broker_zip', 'broker_phone', 'broker_fax', 'broker_email'], 'string', 'max' => 255],
+            [['broker_name', 'broker_address', 'broker_phone', 'broker_fax', 'broker_email','mc'], 'string', 'max' => 255],
         ];
     }
 
@@ -62,14 +61,12 @@ class Brokers extends \yii\db\ActiveRecord
     {
         return [
             'id' => Yii::t('broker', 'ID'),
-            'broker_name' => Yii::t('broker', 'Broker Name'),
-            'broker_state' => Yii::t('broker', 'Broker State'),
-            'broker_city' => Yii::t('broker', 'Broker City'),
-            'broker_zip' => Yii::t('broker', 'Broker Zip'),
-            'broker_phone' => Yii::t('broker', 'Broker Phone'),
-            'broker_fax' => Yii::t('broker', 'Broker Fax'),
-            'broker_email' => Yii::t('broker', 'Broker Email'),
-            'broker_contact_person' => Yii::t('broker', 'Broker Contact Person'),
+            'broker_name' => Yii::t('broker', 'Name'),
+            'broker_address' => Yii::t('broker', 'Address (State, city, zip)'),
+            'broker_phone' => Yii::t('broker', 'Phone'),
+            'broker_fax' => Yii::t('broker', 'Fax'),
+            'broker_email' => Yii::t('broker', 'Email'),
+            'broker_contact_person' => Yii::t('broker', 'Contact Person'),
             'status' => Yii::t('broker', 'Status'),
             'created_by' => Yii::t('broker', 'Created By'),
             'updated_by' => Yii::t('broker', 'Updated By'),

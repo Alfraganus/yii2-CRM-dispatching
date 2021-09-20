@@ -49,14 +49,14 @@ $controller =  Yii::$app->controller->uniqueid;
 
                 <li class="nav-item">
                     <a href="<?=\yii\helpers\Url::to(['carrier/'])?>" class="nav-link">
-                        <i class="far fa-circle nav-icon"></i>
+                        <i class="nav-icon fas fa-table"></i>
                         <p>Carriers</p>
                     </a>
                 </li>
 
                 <li class="nav-item">
                     <a href="<?=\yii\helpers\Url::to(['driver/'])?>" class="nav-link">
-                        <i class="far fa-circle nav-icon"></i>
+                        <i class="nav-icon fas fa-table"></i>
                         <p>Drivers</p>
                     </a>
                 </li>

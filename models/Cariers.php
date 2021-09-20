@@ -3,6 +3,9 @@
 namespace app\models;
 
 use Yii;
+use yii\behaviors\BlameableBehavior;
+use yii\db\ActiveRecord;
+use yii\helpers\ArrayHelper;
 
 /**
  * This is the model class for table "cariers".
@@ -52,4 +55,27 @@ class Cariers extends \yii\db\ActiveRecord
             'updated_by' => Yii::t('carrier', 'Updated By'),
         ];
     }
+
+    public function behaviors()
+    {
+        $behaviors = parent::behaviors();
+        $behaviors = ArrayHelper::merge(
+            $behaviors,
+            [
+                'attributeStamp' => [
+                    'class' => BlameableBehavior::class,
+                    'attributes' => [
+                        ActiveRecord::EVENT_BEFORE_INSERT => 'created_by',
+                        ActiveRecord::EVENT_BEFORE_UPDATE => 'updated_by',
+                    ],
+                    'value' => function ($event) {
+                        return Yii::$app->user->id;
+                    },
+                ],
+
+            ]
+        );
+        return $behaviors;
+    }
+
 }

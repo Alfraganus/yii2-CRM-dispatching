@@ -16,20 +16,13 @@ use yii\widgets\ActiveForm;
             <?= $form->field($model, 'broker_name')->textInput(['maxlength' => true]) ?>
         </div>
 
+
         <div class="col-md-6">
-            <?= $form->field($model, 'broker_state')->textInput(['maxlength' => true]) ?>
+            <?= $form->field($model, 'broker_address')->textInput(['maxlength' => true]) ?>
         </div>
     </div>
 
-    <div class="row">
-        <div class="col-md-6">
-            <?= $form->field($model, 'broker_city')->textInput(['maxlength' => true]) ?>
-        </div>
 
-        <div class="col-md-6">
-            <?= $form->field($model, 'broker_zip')->textInput(['maxlength' => true]) ?>
-        </div>
-    </div>
 
     <div class="row">
         <div class="col-md-6">
@@ -44,6 +37,10 @@ use yii\widgets\ActiveForm;
     <div class="row">
         <div class="col-md-6">
             <?= $form->field($model, 'broker_email')->textInput(['maxlength' => true]) ?>
+        </div>
+
+        <div class="col-md-6">
+            <?= $form->field($model, 'mc')->textInput(['maxlength' => true]) ?>
         </div>
 
     </div>
