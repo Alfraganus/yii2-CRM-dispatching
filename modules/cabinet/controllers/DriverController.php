@@ -73,18 +73,20 @@ class DriverController extends Controller
     {
         $model = new Drivers();
         $userModel = new User();
-        $model->scenario = User::SCENARIO_CREATE;
+        $userModel->scenario = User::SCENARIO_CREATE;
         if ($model->load(Yii::$app->request->post()) && $userModel->load(Yii::$app->request->post())) {
             try {
-                $userModel->password_hash = Yii::$app->security->generatePasswordHash($userModel->password_hash);
-                $userModel->save();
-                $role = Yii::$app->authManager->getRole('driver');
-                Yii::$app->authManager->assign($role, $userModel->id);
+                if ($user = $userModel->signup($userModel->password_hash)) {
+                    $role = Yii::$app->authManager->getRole('driver');
+                    Yii::$app->authManager->assign($role,$user->id);
 
-                $model->user_id =$userModel->id;
-                $model->save(false);
+                    $model->user_id =$user->id;
+                    $model->save();
+                } else {
+                    print_r($userModel->errors);
+                }
 
-                return $this->redirect(['auth/login']);
+                return $this->redirect(['index']);
             } catch (DomainException $exception) {
                 Yii::$app->session->setFlash('error', $exception->getMessage());
             }

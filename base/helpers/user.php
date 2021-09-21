@@ -92,6 +92,14 @@ function company_name()
     return $company->company_name??'-';
 }
 
+function dispatcher_name()
+{
+    $profile = \app\models\UserProfile::findOne(['user_id'=>current_user_id()]);
+    $name =$profile->name??'';
+    $surname =$profile->surname??'';
+    return  $name.' '.$surname;
+}
+
 function company_info()
 {
     $user_id = current_user_id();

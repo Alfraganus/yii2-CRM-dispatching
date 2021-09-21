@@ -18,7 +18,7 @@ class BrokersSearch extends Brokers
     {
         return [
             [['id', 'status', 'created_by', 'updated_by'], 'integer'],
-            [['broker_name', 'broker_state', 'broker_city', 'broker_zip', 'broker_phone', 'broker_fax', 'broker_email', 'broker_contact_person'], 'safe'],
+            [['broker_name', 'broker_address', 'broker_phone', 'broker_fax', 'broker_email', 'broker_contact_person'], 'safe'],
         ];
     }
 
@@ -65,9 +65,7 @@ class BrokersSearch extends Brokers
         ]);
 
         $query->andFilterWhere(['like', 'broker_name', $this->broker_name])
-            ->andFilterWhere(['like', 'broker_state', $this->broker_state])
-            ->andFilterWhere(['like', 'broker_city', $this->broker_city])
-            ->andFilterWhere(['like', 'broker_zip', $this->broker_zip])
+            ->andFilterWhere(['like', 'broker_address', $this->broker_address])
             ->andFilterWhere(['like', 'broker_phone', $this->broker_phone])
             ->andFilterWhere(['like', 'broker_fax', $this->broker_fax])
             ->andFilterWhere(['like', 'broker_email', $this->broker_email])

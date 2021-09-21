@@ -12,9 +12,23 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'carrier_name')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'carrier_info')->textarea(['rows' => 6]) ?>
+    <div class="row">
+        <div class="col-md-6">
+            <?= $form->field($userModel, 'username')->textInput(['maxlength' => true]) ?>
+        </div>
+        <div class="col-md-6">
+            <?= $form->field($model, 'carrier_name')->textInput(['maxlength' => true]) ?>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <?= $form->field($userModel, 'password_hash')->passwordInput(['maxlength' => true]) ?>
+        </div>
+        <div class="col-md-6">
+            <?= $form->field($userModel, 'retypePassword')->passwordInput(['maxlength' => true]) ?>
+        </div>
+    </div>
 
 
     <div class="form-group">

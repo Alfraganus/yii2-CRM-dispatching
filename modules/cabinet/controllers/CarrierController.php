@@ -4,6 +4,9 @@ namespace app\modules\cabinet\controllers;
 
 use app\models\Cariers;
 use app\models\search\CarriersSearch;
+use app\models\User;
+use DomainException;
+use Yii;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -67,17 +70,29 @@ class CarrierController extends Controller
     public function actionCreate()
     {
         $model = new Cariers();
+        $userModel = new User();
+        $userModel->scenario = User::SCENARIO_CREATE;
+        if ($model->load(Yii::$app->request->post()) && $userModel->load(Yii::$app->request->post())) {
+            try {
+                if ($user = $userModel->signup($userModel->password_hash)) {
+                    $role = Yii::$app->authManager->getRole('carrier');
+                    Yii::$app->authManager->assign($role,$user->id);
 
-        if ($this->request->isPost) {
-            if ($model->load($this->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->id]);
+                    $model->user_id =$user->id;
+                    $model->save();
+                } else {
+                    print_r($userModel->errors);
+                }
+
+                return $this->redirect(['index']);
+            } catch (DomainException $exception) {
+                Yii::$app->session->setFlash('error', $exception->getMessage());
             }
-        } else {
-            $model->loadDefaultValues();
         }
 
         return $this->render('create', [
             'model' => $model,
+            'userModel'=>$userModel
         ]);
     }
 

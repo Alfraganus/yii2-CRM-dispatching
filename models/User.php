@@ -66,6 +66,7 @@ class User extends ActiveRecord implements IdentityInterface
         return null;
     }
 
+
     public static function getUserRole($user_id)
     {
         $getRole= Yii::$app->authManager->getRolesByUser($user_id);
@@ -187,7 +188,7 @@ class User extends ActiveRecord implements IdentityInterface
      */
     public function setPassword($password)
     {
-        $this->password = Yii::$app->security->generatePasswordHash($password);
+        $this->password_hash = Yii::$app->security->generatePasswordHash($password);
     }
 
     /**
