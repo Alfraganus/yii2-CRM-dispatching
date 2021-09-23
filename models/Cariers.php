@@ -11,6 +11,7 @@ use yii\helpers\ArrayHelper;
  * This is the model class for table "cariers".
  *
  * @property int $id
+ * @property int $company_id
  * @property string|null $carrier_name
  * @property string|null $carrier_info
  * @property int|null $status
@@ -36,7 +37,7 @@ class Cariers extends \yii\db\ActiveRecord
     {
         return [
             [['carrier_info'], 'string'],
-            [['status', 'created_by', 'updated_by'], 'integer'],
+            [['status', 'created_by', 'updated_by','company_id'], 'integer'],
             [['carrier_name'], 'string', 'max' => 255],
         ];
     }
@@ -50,6 +51,7 @@ class Cariers extends \yii\db\ActiveRecord
             'id' => Yii::t('carrier', 'ID'),
             'carrier_name' => Yii::t('carrier', 'Carrier Name'),
             'carrier_info' => Yii::t('carrier', 'Carrier Info'),
+            'company_id' => Yii::t('carrier', 'Company'),
             'status' => Yii::t('carrier', 'Status'),
             'created_by' => Yii::t('carrier', 'Created By'),
             'updated_by' => Yii::t('carrier', 'Updated By'),

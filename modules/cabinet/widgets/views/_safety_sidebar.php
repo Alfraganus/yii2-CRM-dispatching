@@ -31,25 +31,13 @@ $controller =  Yii::$app->controller->uniqueid;
         <nav class="mt-2">
             <ul class="nav nav-pills nav-sidebar flex-column">
                 <li class="nav-item">
-                    <a href="<?=\yii\helpers\Url::to(['broker/'])?>" class="nav-link">
+                    <a href="<?=\yii\helpers\Url::to(['safety/'])?>" class="nav-link">
                         <i class="far fa-circle nav-icon"></i>
-                        <p>Brokers</p>
+                        <p>Drivers document</p>
                     </a>
                 </li>
 
-                <li class="nav-item">
-                    <a href="<?=\yii\helpers\Url::to(['carrier/'])?>" class="nav-link">
-                        <i class="nav-icon fas fa-table"></i>
-                        <p>Carriers</p>
-                    </a>
-                </li>
 
-                <li class="nav-item">
-                    <a href="<?=\yii\helpers\Url::to(['driver/'])?>" class="nav-link">
-                        <i class="nav-icon fas fa-table"></i>
-                        <p>Drivers</p>
-                    </a>
-                </li>
             </ul>
     </div>
     </nav>

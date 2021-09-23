@@ -26,18 +26,29 @@ function allTariffUsers($subscription_id, $tariff_id, $role_name)
     }
 }
 
-function countUserByRole($company_id,$role)
-{
-     $userCount =(new \yii\db\Query())
-         ->select('*')
-         ->from('user_profile')
-         ->leftJoin('auth_assignment','auth_assignment.user_id = user_profile.user_id')
-         ->where(['company_id'=>$company_id])
-         ->andWhere(['auth_assignment.item_name'=>$role])
-         ->count();
+    function countUserByRole($company_id,$role)
+        {
+        $userCount = (new \yii\db\Query())
+            ->select('*')
+            ->from('user_profile')
+            ->leftJoin('auth_assignment', 'auth_assignment.user_id = user_profile.user_id')
+            ->where(['company_id' => $company_id])
+            ->andWhere(['auth_assignment.item_name' => $role])
+            ->count();
 
-     return $userCount;
-}
+             return $userCount;
+        }
+
+        function getDriversByCompany($company_id)
+        {
+            $userCount = (new \yii\db\Query())
+                ->select('drivers.*')
+                ->from('drivers')
+                ->leftJoin('auth_assignment', 'auth_assignment.user_id = drivers.user_id')
+                ->where(['drivers.company_id'=>$company_id])
+                ->all();
+            return $userCount;
+        }
 
 function extraUserPrices($key,$in_tariff=false)
 {
@@ -63,6 +74,13 @@ function extraUserPrices($key,$in_tariff=false)
 
     return $extraUserPrice->unit_value;
 }
+
+    function getTeamUserCompanyInfo($user_id)
+    {
+        $getCompany_id = \app\models\UserProfile::findOne(['user_id'=>$user_id]);
+        $userCompanyProfile = CompanyProfile::findOne(['user_id'=>$getCompany_id->company_id]);
+        return !empty($userCompanyProfile)?$userCompanyProfile:'Company info not found!';
+    }
 
 
 
@@ -92,7 +110,7 @@ function company_name()
     return $company->company_name??'-';
 }
 
-function dispatcher_name()
+function team_member_name()
 {
     $profile = \app\models\UserProfile::findOne(['user_id'=>current_user_id()]);
     $name =$profile->name??'';

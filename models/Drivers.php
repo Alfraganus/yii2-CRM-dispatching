@@ -11,6 +11,7 @@ use yii\helpers\ArrayHelper;
  * This is the model class for table "drivers".
  *
  * @property int $id
+ * @property int $company_id
  * @property int|null $user_id
  * @property int|null $carrier_id
  * @property string|null $driver_fullname
@@ -34,7 +35,7 @@ class Drivers extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['user_id', 'carrier_id'], 'integer'],
+            [['user_id', 'carrier_id','company_id'], 'integer'],
             [['driver_fullname'], 'string', 'max' => 255],
             [['carrier_id'], 'exist', 'skipOnError' => true, 'targetClass' => Cariers::className(), 'targetAttribute' => ['carrier_id' => 'id']],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['user_id' => 'id']],
@@ -48,11 +49,13 @@ class Drivers extends \yii\db\ActiveRecord
     {
         return [
             'id' => Yii::t('driver', 'ID'),
+            'company_id' => Yii::t('carrier', 'Company'),
             'user_id' => Yii::t('driver', 'User ID'),
             'carrier_id' => Yii::t('driver', 'Carrier ID'),
             'driver_fullname' => Yii::t('driver', 'Driver Fullname'),
         ];
     }
+
 
 
 

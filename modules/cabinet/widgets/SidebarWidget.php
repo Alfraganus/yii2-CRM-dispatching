@@ -8,11 +8,15 @@ class SidebarWidget extends Widget
 {
     public function run()
     {
-        if (getUserRole() == 'cadmin') {
-            return $this->render('_manager_sidebar');
-        } elseif(getUserRole() == 'dispatcher') {
-            return $this->render('_dispatcher_sidebar');
+        switch (getUserRole()) {
+            case "cadmin":
+                return $this->render('_manager_sidebar');
+            case "dispatcher":
+                return $this->render('_dispatcher_sidebar');
+            case "safety_specialist":
+                return $this->render('_safety_sidebar');
         }
+
 
     }
 }

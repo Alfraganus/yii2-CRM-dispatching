@@ -1,6 +1,42 @@
 <?php
 // Get current lang
 
+function documents_needed_to_submit($role, $count=false, $document_category = null)
+{
+    if (!empty($document_category)) {
+        $query = ['document_category_id' => $document_category, 'user_role' => $role];
+    } else {
+        $query = ['user_role' => $role];
+    }
+    $documents = \app\models\UserDocuments::find()->where($query);
+
+    if($count) {
+        $documents =  $documents->count();
+    } else {
+        $documents =  $documents->all();
+    }
+
+    return $documents;
+}
+
+    function getUserSubmittedDocuments($user_id,$company_id,$role,$count=false)
+    {
+        $query = [
+            'user_id'=>$user_id,
+            'company_id'=>$company_id,
+            'role'=>$role,
+        ];
+        $userSubmittedDocuments = \app\models\UserUploadedDocuments::find()->where($query);
+        if($count) {
+            $documents =  $userSubmittedDocuments->count();
+        } else {
+            $documents =  $userSubmittedDocuments->all();
+        }
+        return $documents;
+    }
+
+
+
 
  function queryMaster($table, $is_plural, $condition = [])
 {
@@ -42,16 +78,23 @@ function get_percentage($total, $number)
 
     }
 }
-        function get_current_lang($field = 'lang_code')
-{
-    $array = \base\Container::$language;
 
-    if ($field == 'array') {
-        return $array;
+    function get_percentage_two_numbers($total, $current)
+    {
+        return number_format(($current/$total)*100, 2);
     }
 
-    return array_value($array, $field);
-}
+
+    function get_current_lang($field = 'lang_code')
+    {
+        $array = \base\Container::$language;
+
+        if ($field == 'array') {
+            return $array;
+        }
+
+        return array_value($array, $field);
+    }
 
 // Get languages
 function get_languages($fields = null)
