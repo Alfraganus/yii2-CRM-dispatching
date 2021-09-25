@@ -55,6 +55,7 @@ class DocumentController extends Controller
                     $userUploadedDocuments = new UserUploadedDocuments();
                     $userUploadedDocuments->company_id = $company_id;
                     $userUploadedDocuments->user_id = $user_id;
+                    $userUploadedDocuments->created_at = date('Y-m-d H:i:s');
                     $userUploadedDocuments->role = 'driver';
                     $userUploadedDocuments->document_category_id = $model->document_category_id[$index];
                     $userUploadedDocuments->document_id =  $model->document_id[$index];

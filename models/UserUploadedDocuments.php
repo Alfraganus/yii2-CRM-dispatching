@@ -3,6 +3,9 @@
 namespace app\models;
 
 use Yii;
+use yii\behaviors\BlameableBehavior;
+use yii\db\ActiveRecord;
+use yii\helpers\ArrayHelper;
 
 /**
  * This is the model class for table "user_uploaded_documents".
@@ -55,6 +58,28 @@ class UserUploadedDocuments extends \yii\db\ActiveRecord
             'created_by' => Yii::t('documents', 'Created By'),
         ];
     }
+
+    public function behaviors()
+    {
+        $behaviors = parent::behaviors();
+        $behaviors = ArrayHelper::merge(
+            $behaviors,
+            [
+                'attributeStamp' => [
+                    'class' => BlameableBehavior::class,
+                    'attributes' => [
+                        ActiveRecord::EVENT_BEFORE_INSERT => 'created_by',
+                    ],
+                    'value' => function ($event) {
+                        return Yii::$app->user->id;
+                    },
+                ],
+
+            ]
+        );
+        return $behaviors;
+    }
+
     public function getDocument()
     {
         return $this->hasOne(UserDocuments::className(), ['id' => 'document_id']);
