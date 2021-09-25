@@ -55,7 +55,7 @@
                         <div class="portfolio-hover">
                             <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
                         </div>
-                        <img class="img-fluid" src="/web/assets/img/portfolio/1.jpg" alt="..." />
+                        <img class="img-fluid" src="assets/img/portfolio/1.jpg" alt="..." />
                     </a>
                     <div class="portfolio-caption">
                         <div class="portfolio-caption-heading">Threads</div>
@@ -70,7 +70,7 @@
                         <div class="portfolio-hover">
                             <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
                         </div>
-                        <img class="img-fluid" src="/web/assets/img/portfolio/2.jpg" alt="..." />
+                        <img class="img-fluid" src="assets/img/portfolio/2.jpg" alt="..." />
                     </a>
                     <div class="portfolio-caption">
                         <div class="portfolio-caption-heading">Explore</div>
@@ -85,7 +85,7 @@
                         <div class="portfolio-hover">
                             <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
                         </div>
-                        <img class="img-fluid" src="/web/assets/img/portfolio/3.jpg" alt="..." />
+                        <img class="img-fluid" src="assets/img/portfolio/3.jpg" alt="..." />
                     </a>
                     <div class="portfolio-caption">
                         <div class="portfolio-caption-heading">Finish</div>
@@ -100,7 +100,7 @@
                         <div class="portfolio-hover">
                             <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
                         </div>
-                        <img class="img-fluid" src="/web/assets/img/portfolio/4.jpg" alt="..." />
+                        <img class="img-fluid" src="assets/img/portfolio/4.jpg" alt="..." />
                     </a>
                     <div class="portfolio-caption">
                         <div class="portfolio-caption-heading">Lines</div>
@@ -115,7 +115,7 @@
                         <div class="portfolio-hover">
                             <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
                         </div>
-                        <img class="img-fluid" src="/web/assets/img/portfolio/5.jpg" alt="..." />
+                        <img class="img-fluid" src="assets/img/portfolio/5.jpg" alt="..." />
                     </a>
                     <div class="portfolio-caption">
                         <div class="portfolio-caption-heading">Southwest</div>
@@ -130,7 +130,7 @@
                         <div class="portfolio-hover">
                             <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
                         </div>
-                        <img class="img-fluid" src="/web/assets/img/portfolio/6.jpg" alt="..." />
+                        <img class="img-fluid" src="assets/img/portfolio/6.jpg" alt="..." />
                     </a>
                     <div class="portfolio-caption">
                         <div class="portfolio-caption-heading">Window</div>
@@ -150,7 +150,7 @@
         </div>
         <ul class="timeline">
             <li>
-                <div class="timeline-image"><img class="rounded-circle img-fluid" src="/web/assets/img/about/1.jpg" alt="..." /></div>
+                <div class="timeline-image"><img class="rounded-circle img-fluid" src="assets/img/about/1.jpg" alt="..." /></div>
                 <div class="timeline-panel">
                     <div class="timeline-heading">
                         <h4>2009-2011</h4>
@@ -160,7 +160,7 @@
                 </div>
             </li>
             <li class="timeline-inverted">
-                <div class="timeline-image"><img class="rounded-circle img-fluid" src="/web/assets/img/about/2.jpg" alt="..." /></div>
+                <div class="timeline-image"><img class="rounded-circle img-fluid" src="assets/img/about/2.jpg" alt="..." /></div>
                 <div class="timeline-panel">
                     <div class="timeline-heading">
                         <h4>March 2011</h4>
@@ -170,7 +170,7 @@
                 </div>
             </li>
             <li>
-                <div class="timeline-image"><img class="rounded-circle img-fluid" src="/web/assets/img/about/3.jpg" alt="..." /></div>
+                <div class="timeline-image"><img class="rounded-circle img-fluid" src="assets/img/about/3.jpg" alt="..." /></div>
                 <div class="timeline-panel">
                     <div class="timeline-heading">
                         <h4>December 2015</h4>
@@ -180,7 +180,7 @@
                 </div>
             </li>
             <li class="timeline-inverted">
-                <div class="timeline-image"><img class="rounded-circle img-fluid" src="/web/assets/img/about/4.jpg" alt="..." /></div>
+                <div class="timeline-image"><img class="rounded-circle img-fluid" src="assets/img/about/4.jpg" alt="..." /></div>
                 <div class="timeline-panel">
                     <div class="timeline-heading">
                         <h4>July 2020</h4>
@@ -213,7 +213,7 @@
         <div class="row">
             <div class="col-lg-4">
                 <div class="team-member">
-                    <img class="mx-auto rounded-circle" src="/web/assets/img/team/1.jpg" alt="..." />
+                    <img class="mx-auto rounded-circle" src="assets/img/team/1.jpg" alt="..." />
                     <h4>Parveen Anand</h4>
                     <p class="text-muted">Lead Designer</p>
                     <a class="btn btn-dark btn-social mx-2" href="#!"><i class="fab fa-twitter"></i></a>
@@ -223,7 +223,7 @@
             </div>
             <div class="col-lg-4">
                 <div class="team-member">
-                    <img class="mx-auto rounded-circle" src="/web/assets/img/team/2.jpg" alt="..." />
+                    <img class="mx-auto rounded-circle" src="assets/img/team/2.jpg" alt="..." />
                     <h4>Diana Petersen</h4>
                     <p class="text-muted">Lead Marketer</p>
                     <a class="btn btn-dark btn-social mx-2" href="#!"><i class="fab fa-twitter"></i></a>
@@ -233,7 +233,7 @@
             </div>
             <div class="col-lg-4">
                 <div class="team-member">
-                    <img class="mx-auto rounded-circle" src="/web/assets/img/team/3.jpg" alt="..." />
+                    <img class="mx-auto rounded-circle" src="assets/img/team/3.jpg" alt="..." />
                     <h4>Larry Parker</h4>
                     <p class="text-muted">Lead Developer</p>
                     <a class="btn btn-dark btn-social mx-2" href="#!"><i class="fab fa-twitter"></i></a>
@@ -252,16 +252,16 @@
     <div class="container">
         <div class="row align-items-center">
             <div class="col-md-3 col-sm-6 my-3">
-                <a href="#!"><img class="img-fluid img-brand d-block mx-auto" src="/web/assets/img/logos/microsoft.svg" alt="..." /></a>
+                <a href="#!"><img class="img-fluid img-brand d-block mx-auto" src="assets/img/logos/microsoft.svg" alt="..." /></a>
             </div>
             <div class="col-md-3 col-sm-6 my-3">
-                <a href="#!"><img class="img-fluid img-brand d-block mx-auto" src="/web/assets/img/logos/google.svg" alt="..." /></a>
+                <a href="#!"><img class="img-fluid img-brand d-block mx-auto" src="assets/img/logos/google.svg" alt="..." /></a>
             </div>
             <div class="col-md-3 col-sm-6 my-3">
-                <a href="#!"><img class="img-fluid img-brand d-block mx-auto" src="/web/assets/img/logos/facebook.svg" alt="..." /></a>
+                <a href="#!"><img class="img-fluid img-brand d-block mx-auto" src="assets/img/logos/facebook.svg" alt="..." /></a>
             </div>
             <div class="col-md-3 col-sm-6 my-3">
-                <a href="#!"><img class="img-fluid img-brand d-block mx-auto" src="/web/assets/img/logos/ibm.svg" alt="..." /></a>
+                <a href="#!"><img class="img-fluid img-brand d-block mx-auto" src="assets/img/logos/ibm.svg" alt="..." /></a>
             </div>
         </div>
     </div>

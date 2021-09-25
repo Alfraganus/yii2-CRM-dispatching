@@ -16,31 +16,52 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\web\UploadedFile;
 
-
 class DocumentController extends Controller
 {
 
-    public function actionDocuments($user_id=33)
+    private $company_id;
+    private $isSafety;
+
+    public function __construct($id, $module, $config = [])
     {
-        $documentsToSubmit = getUserSubmittedDocuments($user_id,15,'driver');
-        $model = new DynamicModel(['file']);
-        $model->addRule(['file'], 'safe');
-        $userUnsubmittedDocuments = getUserUnsubmittedDocuments($user_id,15,'driver');
-        if ($post = Yii::$app->request->post()) {
+        $userRole = getUserRole();
+        if ($userRole == 'safety_specialist') {
+        $this->isSafety = 1;
+        $this->company_id = $getUserDirectory = getTeamUserCompanyInfo(current_user_id())['user_id'];
+            if (!is_dir("uploaded_documents/$getUserDirectory") ) {
+                mkdir('uploaded_documents'.DIRECTORY_SEPARATOR.$getUserDirectory);
+            }
+        } else {
+            Yii::$app->session->setFlash('danger','You are not safety specialist, please contact administrator for more information!');
+           $this->isSafety = 0;
+        }
+        parent::__construct($id, $module, $config);
+    }
 
-            foreach ($documentsToSubmit as $index => $doc) {
+    public function actionDocuments($user_id)
+    {
+        $company_id = getTeamUserCompanyInfo(current_user_id())['user_id'];
+        $documentsToSubmit = getUserSubmittedDocuments($user_id,$company_id,'driver');
+        $model = new DynamicModel(['file','document_category_id','document_id']);
+        $model->addRule(['file','document_category_id','document_id'], 'safe');
+        $userUnsubmittedDocuments = getUserUnsubmittedDocuments($user_id,$company_id,'driver');
+        if ($model->load($this->request->post())) {
+
+            foreach ($userUnsubmittedDocuments as $index => $doc) {
                 $file = UploadedFile::getInstance($model, "file[$index]");
-
-                $userUploadedDocuments = new UserUploadedDocuments();
-                $userUploadedDocuments->company_id = 15;
-                $userUploadedDocuments->user_id = 33;
-                $userUploadedDocuments->role = 'driver';
-                $userUploadedDocuments->document_category_id = 1;
-                $userUploadedDocuments->document_id = 1;
-                $userUploadedDocuments->document = $file->name;
-                $userUploadedDocuments->save();
-                $file->saveAs('uploaded_documents/'.$file->name);
- 
+                if ($file) {
+                    $fileName = time().$file->name;
+                    $fullPath = 'uploaded_documents'.'/'.$this->company_id.'/'.$fileName;
+                    $userUploadedDocuments = new UserUploadedDocuments();
+                    $userUploadedDocuments->company_id = $company_id;
+                    $userUploadedDocuments->user_id = $user_id;
+                    $userUploadedDocuments->role = 'driver';
+                    $userUploadedDocuments->document_category_id = $model->document_category_id[$index];
+                    $userUploadedDocuments->document_id =  $model->document_id[$index];
+                    $userUploadedDocuments->document = '/web/'.$fullPath;
+                    $userUploadedDocuments->save();
+                    $file->saveAs($fullPath);
+                }
             }
             return  $this->redirect(['safety/']);
 
@@ -48,7 +69,8 @@ class DocumentController extends Controller
         return $this->render('documents',[
             'documentsToSubmit'=>$documentsToSubmit,
             'model'=>$model,
-            'userUnsubmittedDocuments'=>$userUnsubmittedDocuments
+            'userUnsubmittedDocuments'=>$userUnsubmittedDocuments,
+            'isSafety'=>$this->isSafety
         ]);
     }
 

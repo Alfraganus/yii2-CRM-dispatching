@@ -3,6 +3,7 @@ use kartik\file\FileInput;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 ?>
+<div style="display:<?=($isSafety ==0)?'none':''?>;">
 <div class="alert alert-success">
     <strong> <h2 class="text-center">The List of drivers documents!</h2></strong>
 </div>
@@ -28,6 +29,8 @@ use yii\widgets\ActiveForm;
                   'browseLabel' =>  'Select Photo'
               ]
           ])->label(false);?>
+          <?= $form->field($model, "document_category_id[$index]")->hiddenInput(['value'=>$documents['document_category_id']])->label(false)?>
+          <?= $form->field($model, "document_id[$index]")->hiddenInput(['value'=>$documents['id']])->label(false)?>
         </div>
     </div>
 
@@ -39,4 +42,5 @@ use yii\widgets\ActiveForm;
 
 
 <?php ActiveForm::end(); ?>
+</div>
 

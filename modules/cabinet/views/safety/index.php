@@ -34,7 +34,7 @@
                 </div>
             </td>
             <td>
-                <a href="<?=\yii\helpers\Url::to(['document/documents'])?>">
+                <a href="<?=\yii\helpers\Url::to(['document/documents','user_id'=>$driver['user_id']])?>">
                     <i  style="font-size: 28px;color: blue" class="fa fa-eye" aria-hidden="true"></i>
                 </a>
             </td>
