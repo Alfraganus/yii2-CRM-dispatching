@@ -6,4 +6,5 @@ return [
     'senderName' => 'Example.com mailer',
     'admin_url' => 'admin.com mailer',
     'assets_url' => 'admin.com mailer',
+    'bsVersion' => '4.x',
 ];

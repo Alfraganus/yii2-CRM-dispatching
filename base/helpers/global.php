@@ -35,6 +35,30 @@ function documents_needed_to_submit($role, $count=false, $document_category = nu
         return $documents;
     }
 
+function getUserUnsubmittedDocuments($user_id,$company_id,$role)
+{
+    $unsubmittedDocuments = [];
+    $documents = \app\models\UserDocuments::find();
+
+    foreach ($documents->all() as $document) {
+        $isUserSubmitted = \app\models\UserUploadedDocuments::find()->where([
+            'document_id'=>$document->id,
+            'user_id'=>$user_id,
+            'company_id'=>$company_id,
+            'role'=>$role,
+        ])->exists();
+        if(!$isUserSubmitted) {
+            $unsubmittedDocuments[] = [
+                'id'=>$document->id,
+                'document_category_id'=>$document->document_category_id,
+                'user_role'=>$document->user_role,
+                'required_document_name'=>$document->required_document_name
+            ];
+        }
+    }
+    return $unsubmittedDocuments;
+}
+
 
 
 

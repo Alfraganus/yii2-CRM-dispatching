@@ -13,6 +13,7 @@ use Yii;
  * @property string|null $role
  * @property int|null $document_category_id
  * @property int|null $document_id
+ * @property string|null $document
  * @property string|null $created_at
  * @property int|null $created_by
  */
@@ -33,7 +34,7 @@ class UserUploadedDocuments extends \yii\db\ActiveRecord
     {
         return [
             [['company_id', 'user_id', 'document_category_id', 'document_id', 'created_by'], 'integer'],
-            [['created_at'], 'safe'],
+            [['created_at','document'], 'safe'],
             [['role'], 'string', 'max' => 100],
         ];
     }
@@ -53,5 +54,9 @@ class UserUploadedDocuments extends \yii\db\ActiveRecord
             'created_at' => Yii::t('documents', 'Created At'),
             'created_by' => Yii::t('documents', 'Created By'),
         ];
+    }
+    public function getDocument()
+    {
+        return $this->hasOne(UserDocuments::className(), ['id' => 'document_id']);
     }
 }

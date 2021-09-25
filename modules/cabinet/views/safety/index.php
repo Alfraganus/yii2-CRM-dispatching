@@ -34,7 +34,9 @@
                 </div>
             </td>
             <td>
-                <i  style="font-size: 28px;color: blue" class="fa fa-eye" aria-hidden="true"></i>
+                <a href="<?=\yii\helpers\Url::to(['document/documents'])?>">
+                    <i  style="font-size: 28px;color: blue" class="fa fa-eye" aria-hidden="true"></i>
+                </a>
             </td>
         </tr>
     <?php endforeach; ?>
