@@ -3,6 +3,12 @@ use kartik\file\FileInput;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 ?>
+<?php if(sizeOf($userUnsubmittedDocuments) < 1): ?>
+    <div class="alert alert-success">
+        <strong>No document to upload or all documents have been submitted!</strong>
+    </div>
+<?php else: ?>
+
 <div style="display:<?=($isSafety ==0)?'none':''?>;">
 <div class="alert alert-success">
     <strong> <h2 class="text-center">The List of drivers documents!</h2></strong>
@@ -43,4 +49,5 @@ use yii\widgets\ActiveForm;
 
 <?php ActiveForm::end(); ?>
 </div>
+<?php endif; ?>
 
