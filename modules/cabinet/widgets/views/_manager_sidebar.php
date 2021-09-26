@@ -59,7 +59,26 @@ $controller =  Yii::$app->controller->uniqueid;
                     </a>
                 </li>
 
+                <li class="nav-item">
+                    <a href="<?=\yii\helpers\Url::to(['broker/'])?>" class="nav-link <?=$controller=='cabinet/broker'?'active':''?>">
+                        <i class="far fa-circle nav-icon"></i>
+                        <p>Brokers</p>
+                    </a>
+                </li>
 
+                <li class="nav-item">
+                    <a href="<?=\yii\helpers\Url::to(['carrier/'])?>" class="nav-link <?=$controller=='cabinet/carrier'?'active':''?>">
+                        <i class="nav-icon fas fa-table"></i>
+                        <p>Carriers</p>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="<?=\yii\helpers\Url::to(['driver/'])?>" class="nav-link <?=$controller=='cabinet/driver'?'active':''?>">
+                        <i class="nav-icon fas fa-table"></i>
+                        <p>Drivers</p>
+                    </a>
+                </li>
 
 
                 <!--hiding it -->

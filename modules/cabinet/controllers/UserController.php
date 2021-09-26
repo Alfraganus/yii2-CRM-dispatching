@@ -124,14 +124,18 @@ class UserController extends DefaultController
                     return $this->redirect(Yii::$app->request->referrer);
 
                } else {
+
                    if ($user = $model->signup($model->password_hash)) {
                        $role = Yii::$app->authManager->getRole($model->role);
                        Yii::$app->authManager->assign($role,$user->id);
 
-                       $userProfile->company_id =current_user_id();
+                       $userProfile->company_id =company_name(false)->id;
                        $userProfile->user_id = $user->id;
-                       $userProfile->save();
-                       $transaction->commit();
+                       if($userProfile->save()) {
+                           $transaction->commit();
+                       } else {
+                           var_dump($userProfile->errors);
+                       }
                        Yii::$app->session->setFlash('success', Yii::t('user','User has been created successfully!'));
                    }
                    return $this->redirect(['user/']);

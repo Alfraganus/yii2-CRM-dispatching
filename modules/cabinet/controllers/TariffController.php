@@ -132,7 +132,7 @@ class TariffController extends Controller
                 $tariff = Tariffs::findOne($session->get('tariff_id'));
                 $subscriptions = new Subscriptions();
                 $subscriptions->tariff_id = $session->get('tariff_id');
-                $subscriptions->company_id = current_user_id();
+                $subscriptions->company_id = company_name(false)->id;
                 $subscriptions->subscription_start_date = Carbon::now();
                 $subscriptions->subscription_end_date = $session->get('tariff_finishing_date');
                 $subscriptions->overall_price = $session->get('overall_price');

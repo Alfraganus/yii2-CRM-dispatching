@@ -30,7 +30,7 @@ use yii\widgets\ActiveForm;
     </div>
 
     <?= $form->field($model, 'carrier_id')->dropDownList(
-            \yii\helpers\ArrayHelper::map(\app\models\Cariers::findAll(['status'=>\app\models\Cariers::ACTIVE]),'id','carrier_name')
+            \yii\helpers\ArrayHelper::map(\app\models\Cariers::findAll(['status'=>\app\models\Cariers::ACTIVE,'company_id'=>company_info()->id]),'id','carrier_name')
     ) ?>
 
 

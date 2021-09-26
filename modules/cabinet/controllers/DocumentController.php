@@ -27,7 +27,7 @@ class DocumentController extends Controller
         $userRole = getUserRole();
         if ($userRole == 'safety_specialist') {
         $this->isSafety = 1;
-        $this->company_id = $getUserDirectory = getTeamUserCompanyInfo(current_user_id())['user_id'];
+        $this->company_id = $getUserDirectory = getTeamUserCompanyInfo(current_user_id())['id'];
             if (!is_dir("uploaded_documents/$getUserDirectory") ) {
                 mkdir('uploaded_documents'.DIRECTORY_SEPARATOR.$getUserDirectory);
             }
@@ -40,7 +40,8 @@ class DocumentController extends Controller
 
     public function actionDocuments($user_id)
     {
-        $company_id = getTeamUserCompanyInfo(current_user_id())['user_id'];
+        $company_id = getTeamUserCompanyInfo(current_user_id())['id'];
+//        var_dump($company_id); die;
         $documentsToSubmit = getUserSubmittedDocuments($user_id,$company_id,'driver');
         $model = new DynamicModel(['file','document_category_id','document_id']);
         $model->addRule(['file','document_category_id','document_id'], 'safe');

@@ -16,6 +16,7 @@ class m210918_085742_create_cariers_table extends Migration
             'id' => $this->primaryKey(),
             'carrier_name'=>$this->string(255),
             'carrier_info'=>$this->text()->null(),
+            'company_id'=>$this->integer()->null(),
             'status'=>$this->integer()->defaultValue(1)->null(),
             'created_by'=>$this->integer()->null(),
             'updated_by'=>$this->integer()->null(),

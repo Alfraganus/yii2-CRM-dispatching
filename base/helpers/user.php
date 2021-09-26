@@ -78,7 +78,7 @@ function extraUserPrices($key,$in_tariff=false)
     function getTeamUserCompanyInfo($user_id)
     {
         $getCompany_id = \app\models\UserProfile::findOne(['user_id'=>$user_id]);
-        $userCompanyProfile = CompanyProfile::findOne(['user_id'=>$getCompany_id->company_id]);
+        $userCompanyProfile = CompanyProfile::findOne(['id'=>$getCompany_id->company_id]);
         return !empty($userCompanyProfile)?$userCompanyProfile:'Company info not found!';
     }
 
@@ -103,10 +103,13 @@ function check_tariff($user_id)
 }
 
 
-function company_name()
+function company_name($getName=true)
 {
     $user_id = current_user_id();
     $company = \app\models\CompanyProfile::findOne(['user_id'=>$user_id]);
+    if(!$getName) {
+        return $company??'-';
+    }
     return $company->company_name??'-';
 }
 

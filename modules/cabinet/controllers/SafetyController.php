@@ -44,7 +44,7 @@ class SafetyController extends Controller
     private function getDrivers()
     {
         $company_id = getTeamUserCompanyInfo(current_user_id());
-        return getDriversByCompany($company_id->user_id);
+        return getDriversByCompany($company_id->id);
     }
 
     public function actionIndex()
@@ -55,7 +55,7 @@ class SafetyController extends Controller
         return $this->render('index', [
             'drivers' => $drivers,
             'numOfDocuments' => $numOfDocuments,
-            'company_id' => $company_id->user_id,
+            'company_id' => $company_id->id,
         ]);
     }
 

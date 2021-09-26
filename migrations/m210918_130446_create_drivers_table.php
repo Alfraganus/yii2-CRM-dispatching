@@ -16,6 +16,7 @@ class m210918_130446_create_drivers_table extends Migration
             'id' => $this->primaryKey(),
             'user_id'=>$this->integer()->null(),
             'carrier_id'=>$this->integer()->null(),
+            'company_id'=>$this->integer()->null(),
             'driver_fullname'=>$this->string(255),
         ]);
         $this->addForeignKey(

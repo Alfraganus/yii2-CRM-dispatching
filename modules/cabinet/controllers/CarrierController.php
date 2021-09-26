@@ -77,7 +77,7 @@ class CarrierController extends Controller
                 if ($user = $userModel->signup($userModel->password_hash)) {
                     $role = Yii::$app->authManager->getRole('carrier');
                     Yii::$app->authManager->assign($role,$user->id);
-
+                    $model->company_id = company_name(false)->id;
                     $model->user_id =$user->id;
                     $model->save();
                 } else {
