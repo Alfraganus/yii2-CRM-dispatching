@@ -79,6 +79,12 @@ $controller =  Yii::$app->controller->uniqueid;
                         <p>Drivers</p>
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a href="<?=\yii\helpers\Url::to(['today-board-status/'])?>" class="nav-link <?=$controller=='cabinet/today-board-status'?'active':''?>">
+                        <i class="nav-icon fas fa-table"></i>
+                        <p>today board status</p>
+                    </a>
+                </li>
 
 
                 <!--hiding it -->
