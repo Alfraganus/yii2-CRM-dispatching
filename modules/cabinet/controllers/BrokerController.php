@@ -9,6 +9,8 @@ use yii\helpers\Json;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+$service = Yii::$container->set('app\models\Brokers');
+
 
 /**
  * BrokerController implements the CRUD actions for Brokers model.
@@ -32,6 +34,12 @@ class BrokerController extends Controller
             ]
         );
     }
+
+    public function actionTest(Brokers $brokers)
+    {
+        return $brokers->status;
+    }
+
 
     /**
      * Lists all Brokers models.
@@ -88,6 +96,7 @@ class BrokerController extends Controller
                     'email'=>$model->email,
                 );
                 $model->broker_contact_person = Json::encode($broker_contact);
+                $model->company_id =  company_name(false)->id;;
                 if($model->save()) {
                     return $this->redirect(['view', 'id' => $model->id]);
                 } else {

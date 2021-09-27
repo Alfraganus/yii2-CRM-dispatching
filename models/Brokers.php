@@ -21,6 +21,7 @@ use yii\helpers\ArrayHelper;
  * @property string|null $broker_email
  * @property string|null $broker_contact_person
  * @property int|null $status
+ * @property int|null $company_id
  * @property int|null $created_by
  * @property int|null $updated_by
  */
@@ -40,7 +41,11 @@ class Brokers extends \yii\db\ActiveRecord
     public $cell_phone;
     public $email;
 
-    
+    public function __construct($config = [])
+    {
+        parent::__construct($config);
+    }
+
     /**
      * {@inheritdoc}
      */
@@ -73,7 +78,10 @@ class Brokers extends \yii\db\ActiveRecord
         ];
     }
     
-    
+    public function test()
+    {
+        return 200;
+    }
     public function behaviors()
     {
         $behaviors = parent::behaviors();
