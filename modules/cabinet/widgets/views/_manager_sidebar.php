@@ -86,6 +86,25 @@ $controller =  Yii::$app->controller->uniqueid;
                     </a>
                 </li>
 
+                <li class="nav-item">
+                    <a href="<?=\yii\helpers\Url::to(['user-document/'])?>" class="nav-link <?=$controller=='cabinet/user-document'?'active':''?>">
+                        <i class="nav-icon fas fa-table"></i>
+                        <p>Document list</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="<?=\yii\helpers\Url::to(['document-category/'])?>" class="nav-link <?=$controller=='cabinet/document-category'?'active':''?>">
+                        <i class="nav-icon fas fa-table"></i>
+                        <p>Document category</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="<?=\yii\helpers\Url::to(['document-content/'])?>" class="nav-link <?=$controller=='cabinet/document-content'?'active':''?>">
+                        <i class="nav-icon fas fa-table"></i>
+                        <p>Document content</p>
+                    </a>
+                </li>
+
 
                 <!--hiding it -->
                 <div style="display: none">

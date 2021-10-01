@@ -80,7 +80,7 @@ class UserUploadedDocuments extends \yii\db\ActiveRecord
         return $behaviors;
     }
 
-    public function getDocument()
+    public function getDocumentName()
     {
         return $this->hasOne(UserDocuments::className(), ['id' => 'document_id']);
     }

@@ -127,6 +127,7 @@ class UserController extends DefaultController
 
                    if ($user = $model->signup($model->password_hash)) {
                        $role = Yii::$app->authManager->getRole($model->role);
+
                        Yii::$app->authManager->assign($role,$user->id);
 
                        $userProfile->company_id =company_name(false)->id;

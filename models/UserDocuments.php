@@ -24,6 +24,11 @@ class UserDocuments extends \yii\db\ActiveRecord
         return 'user_documents';
     }
 
+
+    CONST TYPE_FILE = 'file';
+    CONST TYPE_TEXTINPUT = 'text';
+    CONST TYPE_DATE = 'date';
+
     /**
      * {@inheritdoc}
      */
@@ -34,6 +39,15 @@ class UserDocuments extends \yii\db\ActiveRecord
             [['user_role'], 'string', 'max' => 200],
             [['required_document_name'], 'string', 'max' => 255],
             [['document_category_id'], 'exist', 'skipOnError' => true, 'targetClass' => DocumentCategory::className(), 'targetAttribute' => ['document_category_id' => 'id']],
+        ];
+    }
+
+    public static function documentTypes()
+    {
+        return [
+            self::TYPE_FILE=> self::TYPE_FILE,
+            self::TYPE_TEXTINPUT=> self::TYPE_TEXTINPUT,
+            self::TYPE_DATE=> self::TYPE_DATE,
         ];
     }
 
@@ -50,6 +64,18 @@ class UserDocuments extends \yii\db\ActiveRecord
         ];
     }
 
+    public static function checkIfFileAlreadyExist($user_id,$document_child_id)
+    {
+        $document = UserUploadedDocuments::find()
+            ->where([ 'user_id' => $user_id, 'document_child_id' => $document_child_id])
+            ->exists();
+        if($document) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     /**
      * Gets query for [[DocumentCategory]].
      *
@@ -58,5 +84,9 @@ class UserDocuments extends \yii\db\ActiveRecord
     public function getDocumentCategory()
     {
         return $this->hasOne(DocumentCategory::className(), ['id' => 'document_category_id']);
+    }
+    public function getDocumentChildren()
+    {
+        return $this->hasMany(DocumentsContent::className(), ['document_id' => 'id']);
     }
 }

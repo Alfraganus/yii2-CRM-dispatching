@@ -25,6 +25,7 @@ class m210920_164809_create_user_documents_table extends Migration
             'document_category',
             'id'
         );
+
     }
 
     /**

@@ -37,6 +37,13 @@ $controller =  Yii::$app->controller->uniqueid;
                     </a>
                 </li>
 
+                <li class="nav-item">
+                    <a href="<?=\yii\helpers\Url::to(['safety/driver-vehicle-info'])?>" class="nav-link">
+                        <i class="far fa-circle nav-icon"></i>
+                        <p>Drivers vehicle info</p>
+                    </a>
+                </li>
+
 
             </ul>
     </div>

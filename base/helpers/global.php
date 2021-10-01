@@ -19,12 +19,13 @@ function documents_needed_to_submit($role, $count=false, $document_category = nu
     return $documents;
 }
 
-    function getUserSubmittedDocuments($user_id,$company_id,$role,$count=false)
+    function getUserSubmittedDocuments($user_id,$company_id,$role,$count=false,$document_category = null)
     {
         $query = [
             'user_id'=>$user_id,
             'company_id'=>$company_id,
             'role'=>$role,
+            'document_category_id' => $document_category
         ];
         $userSubmittedDocuments = \app\models\UserUploadedDocuments::find()->where($query);
         if($count) {
@@ -35,10 +36,10 @@ function documents_needed_to_submit($role, $count=false, $document_category = nu
         return $documents;
     }
 
-function getUserUnsubmittedDocuments($user_id,$company_id,$role)
+function getUserUnsubmittedDocuments($user_id,$company_id,$role,$document_category_id)
 {
     $unsubmittedDocuments = [];
-    $documents = \app\models\UserDocuments::find();
+    $documents = \app\models\UserDocuments::find()->where(['document_category_id'=>$document_category_id]);
 
     foreach ($documents->all() as $document) {
         $isUserSubmitted = \app\models\UserUploadedDocuments::find()->where([

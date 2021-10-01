@@ -50,7 +50,7 @@ class SafetyController extends Controller
     public function actionIndex()
     {
         $drivers = $this->getDrivers();
-        $numOfDocuments = documents_needed_to_submit('driver', true);
+        $numOfDocuments = documents_needed_to_submit('driver', true,1);
         $company_id = getTeamUserCompanyInfo(current_user_id());
         return $this->render('index', [
             'drivers' => $drivers,
@@ -58,6 +58,20 @@ class SafetyController extends Controller
             'company_id' => $company_id->id,
         ]);
     }
+
+    public function actionDriverVehicleInfo()
+    {
+        $drivers = $this->getDrivers();
+        $company_id = getTeamUserCompanyInfo(current_user_id());
+        $numOfDocuments = documents_needed_to_submit('driver', true,2);
+
+        return $this->render('driver_vehicle',[
+            'drivers' => $drivers,
+            'numOfDocuments' => $numOfDocuments,
+            'company_id' => $company_id->id,
+        ]);
+    }
+
 
 
 }
