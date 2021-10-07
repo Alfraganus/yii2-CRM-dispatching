@@ -18,84 +18,48 @@ $user_id = Yii::$app->request->get('user_id');
     <strong> <h2 class="text-center">The List of drivers documents!</h2></strong>
 </div>
 <?php $form = ActiveForm::begin(); ?>
-    <?php foreach ($documentParent as $document): ?>
-    <h3><?=$document->required_document_name?></h3>
-<?php   foreach ($document->documentChildren as $index => $child): ?>
-            <?= $form->field($model, "document_type[$id]")->hiddenInput(['value'=>$child->document_type])->label(false)?>
+    <?php foreach ($documentParent as $in=> $document): ?>
+        <?php $docInfo =UserDocuments::percantageOfDocumentsByCategory($company_id,$document->id,$user_id)?>
+        <h3 style="color: <?=$docInfo['full_done']=='full'?'#229954':'#C70039'?>">
+            <?= $document->required_document_name ?>
+            <span style="font-size: 15px"> <?=$docInfo['uploaded'].' / '.$docInfo['all']?></span>
+            <span type="button" class="btn btn-success rounded-circle" data-toggle="collapse" data-target=".demo<?= $in ?>">
+                <i class="fas fa-arrow-down"></i>
+            </span>
+        </h3>
 
-            <?php $id = $child->id; ?>
+        <?php foreach ($document->documentChildren as $index => $child): ?>
+            <?php
+            $id = $child->id;
+            $checkifExist = UserDocuments::checkIfFileAlreadyExist($user_id, $id);
+            $params = [
+                'id' => $id,
+                'in' => $in,
+                'child' => $child,
+                'document' => $document,
+                'user_id' => $user_id,
+                'model' => $model,
+                'form' => $form,
+                'checkifExist' => $checkifExist,
+            ];
+            ?>
             <?php if ($child->document_type == UserDocuments::TYPE_FILE): ?>
-    <div class="form-group row">
-        <label for="staticEmail" class="col-sm-4 col-form-label"><?=$child->document_name?> </label>
-        <div class="col-sm-6">
-            <?php if(!UserDocuments::checkIfFileAlreadyExist($user_id,$id)): ?>
-
-          <?= $form->field($model, "file[$id]")->widget(FileInput::classname(), [
-              'options' => [
-                      'accept' => 'image/*',
-                       'multiple' => false,
-              ],
-              'pluginOptions' => [
-                  'showPreview' => false,
-                  'showCaption' => true,
-                  'showRemove' => false,
-                  'showUpload' => false,
-                  'showCancel' => false,
-                  'mainClass' => 'input-group-lg',
-                  'browseClass' => 'btn btn-primary btn-block',
-                  'browseLabel' =>  'Attachment'
-              ]
-          ])->label(false);?>
-          <?= $form->field($model, "document_category_id[$id]")->hiddenInput(['value'=>$document['document_category_id']])->label(false)?>
-          <?= $form->field($model, "document_id[$id]")->hiddenInput(['value'=>$document['id']])->label(false)?>
-            <?php else : ?>
-                <img src="/web/images/done.png" style="width: 60px;" alt="">
-            <?php endif;?>
-        </div>
-    </div>
+                <?= Yii::$app->controller->renderPartial('_type_file', $params) ?>
             <?php elseif ($child->document_type == UserDocuments::TYPE_TEXTINPUT): ?>
-            <div class="form-group row">
-                <label for="staticEmail" class="col-sm-4 col-form-label"><?=$child->document_name?> </label>
-                <div class="col-sm-6">
-                    <?php if(!UserDocuments::checkIfFileAlreadyExist($user_id,$id)): ?>
-                    <?= $form->field($model, "file[$id]")->textInput()->label(false)?>
-                    <?= $form->field($model, "document_category_id[$id]")->hiddenInput(['value'=>$document['document_category_id']])->label(false)?>
-                    <?= $form->field($model, "document_id[$id]")->hiddenInput(['value'=>$document['id']])->label(false)?>
-                    <?php else : ?>
-                        <img src="/web/images/done.png" style="width: 60px;" alt="">
-                    <?php endif;?>
-                </div>
-            </div>
+                <?= Yii::$app->controller->renderPartial('_type_text', $params) ?>
             <?php elseif ($child->document_type == UserDocuments::TYPE_DATE): ?>
-                <div class="form-group row">
-                    <label for="staticEmail" class="col-sm-4 col-form-label"><?=$child->document_name?> </label>
-                    <div class="col-sm-6">
-                        <?php if(!UserDocuments::checkIfFileAlreadyExist($user_id,$id)): ?>
-                        <?= $form->field($model, "file[$id]")->widget(DatePicker::classname(), [
-                            'options' => ['placeholder' => 'Enter birth date ...'],
-                            'pluginOptions' => [
-                                'autoclose' => true,
-                                'format' => 'dd/mm/yyyy'
-                            ]
-                        ])->label(false) ?>
-                        <?= $form->field($model, "document_category_id[$id]")->hiddenInput(['value'=>$document['document_category_id']])->label(false)?>
-                        <?= $form->field($model, "document_id[$id]")->hiddenInput(['value'=>$document['id']])->label(false)?>
-                        <?php else : ?>
-                            <img src="/web/images/done.png" style="width: 60px;" alt="">
-                        <?php endif;?>
-                    </div>
-                </div>
+                <?= Yii::$app->controller->renderPartial('_type_date', $params) ?>
 
-        <?php endif?>
-<?php endforeach; ?>
+            <?php endif ?>
+        <?php endforeach; ?>
     <?php endforeach; ?>
 
-<div class="form-group">
-    <?= Html::submitButton(Yii::t('tariff', 'Save'), ['class' => 'btn btn-success']) ?>
-</div>
+    <div class="form-group">
+        <?= Html::submitButton(Yii::t('tariff', 'Save'), ['class' => 'btn btn-success']) ?>
+    </div>
 
 
-<?php ActiveForm::end(); ?>
+    <?php ActiveForm::end(); ?>
 </div>
 
 <?php endif; ?>

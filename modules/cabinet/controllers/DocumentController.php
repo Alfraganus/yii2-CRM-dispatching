@@ -102,7 +102,8 @@ class DocumentController extends Controller
             'model'=>$model,
             'userUnsubmittedDocuments'=>$userUnsubmittedDocuments,
             'isSafety'=>$this->isSafety,
-            'documentParent'=>$documentParent
+            'documentParent'=>$documentParent,
+            'company_id'=>$this->company_id
         ]);
     }
 
@@ -135,8 +136,20 @@ class DocumentController extends Controller
         return $this->render('driver_vehicle',[
             'documentsToSubmit'=>$documentsToSubmit,
             'model'=>$model,
-            'userUnsubmittedDocuments'=>$userUnsubmittedDocuments
+            'userUnsubmittedDocuments'=>$userUnsubmittedDocuments,
+
         ]);
+    }
+
+    public function actionViewTreeDocuments($company_id,$user_id)
+    {
+        $documents = UserDocuments::find()->where(['document_category_id'=>1])->each();
+
+        return $this->render('view_tree_documents',compact(
+            'documents',
+            'company_id',
+                'user_id'
+        ));
     }
 
 
@@ -156,8 +169,8 @@ class DocumentController extends Controller
 
     public function actionDownloadFile($id)
     {
-        $download = UserUploadedDocuments::findOne($id);
-        $path = Yii::getAlias('@webroot').$download->document;
+        $download = UserUploadedDocuments::findOne(['document_id'=>$id]);
+        $path = Yii::getAlias('@webroot/').$download->document['file']['path'];
 
         if (file_exists($path)) {
             return Yii::$app->response->sendFile($path, $download->documentName->required_document_name);

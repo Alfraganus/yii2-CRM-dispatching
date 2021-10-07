@@ -84,4 +84,8 @@ class UserUploadedDocuments extends \yii\db\ActiveRecord
     {
         return $this->hasOne(UserDocuments::className(), ['id' => 'document_id']);
     }
+    public function getDocumentChildName()
+    {
+        return $this->hasOne(DocumentsContent::className(), ['document_id' => 'document_id']);
+    }
 }

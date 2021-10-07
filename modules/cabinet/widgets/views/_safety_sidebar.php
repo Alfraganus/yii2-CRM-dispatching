@@ -1,5 +1,5 @@
 <?php
-$controller =  Yii::$app->controller->uniqueid;
+$controller =  Yii::$app->controller->action->id;
 
 ?>
 <!-- Main Sidebar Container -->
@@ -22,7 +22,6 @@ $controller =  Yii::$app->controller->uniqueid;
             <div class="info">
                 <?=team_member_name()?>
             </div>
-            </a>
         </div>
 
         <!-- SidebarSearch Form -->
@@ -31,14 +30,14 @@ $controller =  Yii::$app->controller->uniqueid;
         <nav class="mt-2">
             <ul class="nav nav-pills nav-sidebar flex-column">
                 <li class="nav-item">
-                    <a href="<?=\yii\helpers\Url::to(['safety/'])?>" class="nav-link">
+                    <a href="<?=\yii\helpers\Url::to(['safety/'])?>" class="nav-link <?=$controller=='index'?'active':''?>">
                         <i class="far fa-circle nav-icon"></i>
                         <p>Drivers document</p>
                     </a>
                 </li>
 
                 <li class="nav-item">
-                    <a href="<?=\yii\helpers\Url::to(['safety/driver-vehicle-info'])?>" class="nav-link">
+                    <a href="<?=\yii\helpers\Url::to(['safety/driver-vehicle-info'])?>" class="nav-link <?=$controller=='driver-vehicle-info'?'active':''?>">
                         <i class="far fa-circle nav-icon"></i>
                         <p>Drivers vehicle info</p>
                     </a>

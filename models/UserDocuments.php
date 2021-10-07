@@ -76,6 +76,23 @@ class UserDocuments extends \yii\db\ActiveRecord
         }
     }
 
+    public static function percantageOfDocumentsByCategory($company_id,$document_category,$user_id)
+    {
+       $documentNeedToBeSubmitted = DocumentsContent::find()
+           ->where(['company_id'=>$company_id,'document_id'=>$document_category])
+           ->count();
+
+       $documentsUploaded = UserUploadedDocuments::find()
+           ->where(['company_id'=>$company_id,'document_id'=>$document_category,'user_id'=>$user_id])
+           ->count();
+
+       return [
+           'all'=>$documentNeedToBeSubmitted,
+           'uploaded'=>$documentsUploaded??0,
+           'full_done'=>$documentNeedToBeSubmitted==$documentsUploaded?'full':'not_full'
+       ];
+    }
+
     /**
      * Gets query for [[DocumentCategory]].
      *
@@ -89,4 +106,5 @@ class UserDocuments extends \yii\db\ActiveRecord
     {
         return $this->hasMany(DocumentsContent::className(), ['document_id' => 'id']);
     }
+
 }

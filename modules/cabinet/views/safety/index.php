@@ -12,7 +12,7 @@
         <th>Left unsubmitted documents</th>
         <th>Percentage</th>
         <th>View  documents </th>
-        <th>send documents</th>
+        <th>Upload documents</th>
 
 
     </tr>
@@ -35,7 +35,7 @@
                 </div>
             </td>
             <td>
-                <a href="<?=\yii\helpers\Url::to(['document/view-document',
+                <a href="<?=\yii\helpers\Url::to(['document/view-tree-documents',
                     'company_id'=>$company_id,
                     'user_id'=>$driver['user_id'],
                     'role'=>'driver'])
@@ -45,7 +45,7 @@
             </td>
             <td>
                 <a href="<?=\yii\helpers\Url::to(['document/documents','user_id'=>$driver['user_id']])?>">
-                    <i  style="font-size: 28px;color: blue" class="fa fa-plane-departure" aria-hidden="true"></i>
+                    <i  style="font-size: 28px;color: blue" class="fa fa-upload" aria-hidden="true"></i>
                 </a>
             </td>
         </tr>

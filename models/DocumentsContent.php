@@ -32,8 +32,8 @@ class DocumentsContent extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['document_id', 'company_id'], 'integer'],
-            [['document_type'], 'string', 'max' => 150],
+            [['document_id', 'company_id','document_category'], 'integer'],
+            [['document_type','role'], 'string', 'max' => 150],
             [['document_name'], 'string', 'max' => 255],
             [['company_id'], 'exist', 'skipOnError' => true, 'targetClass' => CompanyProfile::className(), 'targetAttribute' => ['company_id' => 'id']],
             [['document_id'], 'exist', 'skipOnError' => true, 'targetClass' => UserDocuments::className(), 'targetAttribute' => ['document_id' => 'id']],
@@ -51,6 +51,7 @@ class DocumentsContent extends \yii\db\ActiveRecord
             'document_type' => Yii::t('documents', 'Document Type'),
             'document_name' => Yii::t('documents', 'Document name'),
             'company_id' => Yii::t('documents', 'Company ID'),
+            'document_category' => Yii::t('documents', 'Category'),
         ];
     }
 

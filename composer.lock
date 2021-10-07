@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d2254aca7751a6107577bba3cc099329",
+    "content-hash": "c86128c66ce78a67e29f95b276c31d30",
     "packages": [
         {
             "name": "bower-asset/bootstrap",
@@ -902,6 +902,54 @@
                 "source": "https://github.com/paragonie/random_compat"
             },
             "time": "2020-10-15T08:29:30+00:00"
+        },
+        {
+            "name": "sjaakp/yii2-bandoneon",
+            "version": "1.0.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/sjaakp/yii2-bandoneon.git",
+                "reference": "2cf061b206c5e1fdc7cbfeca9c7c4b0b06871598"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/sjaakp/yii2-bandoneon/zipball/2cf061b206c5e1fdc7cbfeca9c7c4b0b06871598",
+                "reference": "2cf061b206c5e1fdc7cbfeca9c7c4b0b06871598",
+                "shasum": ""
+            },
+            "require": {
+                "yiisoft/yii2": "*"
+            },
+            "type": "yii2-extension",
+            "autoload": {
+                "psr-4": {
+                    "sjaakp\\bandoneon\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Sjaak Priester",
+                    "email": "sjaak@sjaakpriester.nl",
+                    "homepage": "http://sjaakpriester.nl"
+                }
+            ],
+            "description": "Lightweight accordion widget for Yii 2.0.",
+            "keywords": [
+                "accordion",
+                "extension",
+                "widget",
+                "yii",
+                "yii2"
+            ],
+            "support": {
+                "issues": "https://github.com/sjaakp/yii2-bandoneon/issues",
+                "source": "https://github.com/sjaakp/yii2-bandoneon/tree/master"
+            },
+            "time": "2018-03-01T14:00:51+00:00"
         },
         {
             "name": "swiftmailer/swiftmailer",

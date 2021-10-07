@@ -3,6 +3,7 @@
 namespace app\modules\cabinet\controllers;
 
 use app\models\DocumentsContent;
+use app\models\UserDocuments;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -80,7 +81,10 @@ class DocumentContentController extends Controller
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {
+                $getDocument = UserDocuments::findOne($model->document_id);
                 $model->company_id = company_name(false)->id;
+                $model->document_category = $getDocument->document_category_id;
+                $model->role = $getDocument->user_role;
                 $model->save();
                 return $this->redirect(['view', 'id' => $model->id]);
             }

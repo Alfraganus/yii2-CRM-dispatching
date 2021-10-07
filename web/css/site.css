@@ -1,3 +1,6 @@
+.input-group-prepend span {
+    background: #007bff !important;
+}
 .user-panel img {
     width: 3.1rem !important;
 }
