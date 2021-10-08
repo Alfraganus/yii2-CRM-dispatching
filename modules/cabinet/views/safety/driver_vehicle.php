@@ -18,9 +18,9 @@
     </tr>
     </thead>
     <tbody>
-    <?php foreach ($drivers as $driver): ?>
+    <?php foreach ($carriers as $carrier): ?>
         <tr>
-            <td><?=$driver['driver_fullname']?></td>
+            <td><?=$carrier['carrier_name']?></td>
             <td><?=$numOfDocuments?></td>
             <td><?= $submittedDocuments = getUserSubmittedDocuments(
                     $driver['user_id'],
@@ -32,7 +32,7 @@
             <td><?=$numOfDocuments-$submittedDocuments?></td>
             <td>
                 <div class="progress">
-                    <div class="progress-bar" role="progressbar" style="width:<?=$percentage =get_percentage_two_numbers($numOfDocuments,$submittedDocuments)?>%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"><?=$percentage?>%</div>
+<!--                    <div class="progress-bar" role="progressbar" style="width:--><?//=$percentage =get_percentage_two_numbers($numOfDocuments,$submittedDocuments)?>/*%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">*/<?//=$percentage?><!--%</div>-->
                 </div>
             </td>
             <td>
@@ -45,8 +45,12 @@
                 </a>
             </td>
             <td>
-                <a href="<?=\yii\helpers\Url::to(['document/crete-driver-vehicle-info','user_id'=>$driver['user_id']])?>">
-                    <i  style="font-size: 28px;color: blue" class="fa fa-plane-departure" aria-hidden="true"></i>
+                <a href="<?=\yii\helpers\Url::to(['document/documents',
+                    'user_id'=>$carrier['user_id'],
+                    'role'=>'carrier',
+                    'document_category'=>2
+                ])?>">
+                    <i  style="font-size: 28px;color: blue" class="fa fa-upload" aria-hidden="true"></i>
                 </a>
             </td>
         </tr>

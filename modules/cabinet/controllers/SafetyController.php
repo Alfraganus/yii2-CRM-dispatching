@@ -35,6 +35,16 @@ class SafetyController extends Controller
             ]
         );
     }
+    private $company_id;
+    public function __construct($id, $module, $config = [])
+    {
+        if(getUserRole() == 'cadmin') {
+            $this->company_id = company_info()['id'];
+        } else {
+            $this->company_id = getTeamUserCompanyInfo(current_user_id())['id'];
+        }
+        parent::__construct($id, $module, $config);
+    }
 
     /**
      * Lists all Drivers models.
@@ -51,22 +61,20 @@ class SafetyController extends Controller
     {
         $drivers = $this->getDrivers();
         $numOfDocuments = documents_needed_to_submit('driver', true,1);
-        $company_id = getTeamUserCompanyInfo(current_user_id());
         return $this->render('index', [
             'drivers' => $drivers,
             'numOfDocuments' => $numOfDocuments,
-            'company_id' => $company_id->id,
+            'company_id' => $this->company_id,
         ]);
     }
 
     public function actionDriverVehicleInfo()
     {
-        $drivers = $this->getDrivers();
-        $company_id = getTeamUserCompanyInfo(current_user_id());
-        $numOfDocuments = documents_needed_to_submit('driver', true,2);
+        $carriers = queryMaster('cariers',true,['company_id'=>$this->company_id]);
+        $numOfDocuments = documents_needed_to_submit('carrier', true,2);
 
         return $this->render('driver_vehicle',[
-            'drivers' => $drivers,
+            'carriers' => $carriers,
             'numOfDocuments' => $numOfDocuments,
             'company_id' => $company_id->id,
         ]);

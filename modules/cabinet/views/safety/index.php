@@ -26,7 +26,8 @@
                     $driver['user_id'],
                     $company_id,
                     'driver',
-                    true
+                    true,
+                    1
                 )?></td>
             <td><?=$numOfDocuments-$submittedDocuments?></td>
             <td>
@@ -38,13 +39,18 @@
                 <a href="<?=\yii\helpers\Url::to(['document/view-tree-documents',
                     'company_id'=>$company_id,
                     'user_id'=>$driver['user_id'],
-                    'role'=>'driver'])
+                    'role'=>'driver'
+                ])
                 ?>">
                     <i  style="font-size: 28px;color: blue" class="fa fa-file" aria-hidden="true"></i>
                 </a>
             </td>
             <td>
-                <a href="<?=\yii\helpers\Url::to(['document/documents','user_id'=>$driver['user_id']])?>">
+                <a href="<?=\yii\helpers\Url::to(['document/documents',
+                    'user_id'=>$driver['user_id'],
+                    'role'=>'driver',
+                    'document_category'=>1
+                ])?>">
                     <i  style="font-size: 28px;color: blue" class="fa fa-upload" aria-hidden="true"></i>
                 </a>
             </td>

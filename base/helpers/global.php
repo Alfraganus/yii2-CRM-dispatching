@@ -4,11 +4,11 @@
 function documents_needed_to_submit($role, $count=false, $document_category = null)
 {
     if (!empty($document_category)) {
-        $query = ['document_category_id' => $document_category, 'user_role' => $role];
+        $query = ['document_category' => $document_category, 'role' => $role];
     } else {
-        $query = ['user_role' => $role];
+        $query = ['role' => $role];
     }
-    $documents = \app\models\UserDocuments::find()->where($query);
+    $documents = \app\models\DocumentsContent::find()->where($query);
 
     if($count) {
         $documents =  $documents->count();

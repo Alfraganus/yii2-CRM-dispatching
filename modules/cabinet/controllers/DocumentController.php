@@ -39,15 +39,15 @@ class DocumentController extends Controller
         parent::__construct($id, $module, $config);
     }
 
-    public function actionDocuments($user_id)
+    public function actionDocuments($user_id,$document_category,$role)
     {
         $company_id = getTeamUserCompanyInfo(current_user_id())['id'];
-        $documentsToSubmit = getUserSubmittedDocuments($user_id, $company_id, 'driver');
+        $documentsToSubmit = getUserSubmittedDocuments($user_id, $company_id, $role);
         $model = new DynamicModel(['file', 'document_category_id', 'document_id', 'document_type']);
         $model->addRule(['file', 'document_category_id', 'document_id', 'document_type'], 'safe');
-        $userUnsubmittedDocuments = getUserUnsubmittedDocuments($user_id, $company_id, 'driver',1);
+        $userUnsubmittedDocuments = getUserUnsubmittedDocuments($user_id, $company_id, $role,$document_category);
 
-        $documentParent = UserDocuments::find()->where(['document_category_id'=>1])->all();
+        $documentParent = UserDocuments::find()->where(['document_category_id'=>$document_category])->all();
         if ($post = $model->load($this->request->post())) {
             foreach ($documentParent as $document) {
                 foreach ($document->documentChildren as $index => $child) {
@@ -86,7 +86,7 @@ class DocumentController extends Controller
                         $userUploadedDocuments->company_id = $company_id;
                         $userUploadedDocuments->user_id = $user_id;
                         $userUploadedDocuments->created_at = date('Y-m-d H:i:s');
-                        $userUploadedDocuments->role = 'driver';
+                        $userUploadedDocuments->role = $role;
                         $userUploadedDocuments->document_category_id = $model->document_category_id[$id];
                         $userUploadedDocuments->document_id = $model->document_id[$id];
                         $userUploadedDocuments->save();

@@ -78,7 +78,7 @@ function extraUserPrices($key,$in_tariff=false)
     function getTeamUserCompanyInfo($user_id)
     {
         $getCompany_id = \app\models\UserProfile::findOne(['user_id'=>$user_id]);
-        $userCompanyProfile = CompanyProfile::findOne(['id'=>$getCompany_id->company_id]);
+        $userCompanyProfile = CompanyProfile::findOne(['user_id'=>$getCompany_id->company_id]);
         return !empty($userCompanyProfile)?$userCompanyProfile:'Company info not found!';
     }
 
