@@ -44,7 +44,13 @@ $this->beginPage(); ?>
 
 
     <?php $this->endBody(); ?>
+    <style>
+        .input-group-prepend span {
+            background: transparent !important;
+            color:#212529 !important;
+        }
 
+    </style>
 </body>
 
 </html>

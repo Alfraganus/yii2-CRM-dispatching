@@ -50,6 +50,14 @@ $controller =  Yii::$app->controller->uniqueid;
                         </p>
                     </a>
                 </li>
+
+                <li class="nav-item">
+                    <a href="<?=\yii\helpers\Url::to(['load/'])?>" class="nav-link <?=$controller=='cabinet/load'?'active':''?>">
+                        <i class="far fa-circle nav-icon"></i>
+                        <p>Loads</p>
+                    </a>
+                </li>
+
                 <li class="nav-item">
                     <a href="<?=\yii\helpers\Url::to(['user/'])?>" class="nav-link <?=$controller=='cabinet/user'?'active':''?>">
                         <i class="nav-icon fas fa-th"></i>

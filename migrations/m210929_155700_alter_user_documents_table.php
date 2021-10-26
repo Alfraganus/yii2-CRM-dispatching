@@ -35,7 +35,7 @@ class m210929_155700_alter_user_documents_table extends Migration
             'documents_content',
             'company_id',
             'company_profile',
-            'user_id',
+            'id',
             'CASCADE'
         );
 

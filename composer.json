@@ -23,7 +23,8 @@
         "nesbot/carbon": "^2.52",
         "kartik-v/yii2-widget-fileinput": "@dev",
         "kartik-v/yii2-widget-datepicker": "@dev",
-        "sjaakp/yii2-bandoneon": "*"
+        "sjaakp/yii2-bandoneon": "*",
+        "unclead/yii2-multiple-input": "~2.0"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.1.0",
