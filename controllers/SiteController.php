@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\models\Brokers;
 use Yii;
 use yii\filters\AccessControl;
 use yii\web\Controller;
@@ -54,6 +55,17 @@ class SiteController extends Controller
         ];
     }
 
+    public function actionBrokerData()
+    {
+        \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+
+        $request = Yii::$app->request;
+        if($request->isPost) {
+            $post = $request->post();
+            $broker = Brokers::findOne($post['broker_id']);
+            return $broker;
+        }
+    }
 
 
     /**

@@ -26,6 +26,7 @@ class CabinetAsset extends AssetBundle
     ];
 
     public $js = [
+        'web/js/main.js',
         'https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js',
         'web/plugins/bootstrap/js/bootstrap.bundle.min.js',
         'web/plugins/chart.js/Chart.min.js',

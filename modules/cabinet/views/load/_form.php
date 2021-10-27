@@ -132,33 +132,33 @@ $brokers2 = \yii\helpers\ArrayHelper::getColumn(\app\models\Brokers::find()->all
                         </div>
                         <div class="card-body">
                             <!-- Date -->
-                            <?= $form->field($model, 'broker_id')->dropDownList($brokers) ?>
+                            <?= $form->field($model, 'broker_id')->dropDownList($brokers,['prompt'=>'Please choose broker']) ?>
                             <!-- Date and time -->
                             <div class="form-group">
                                 <label>Broker name:</label>
                                 <div class="input-group date">
-                                    <input type="text" class="form-control">
+                                    <input type="text" id="name" class="form-control" disabled>
                                 </div>
                             </div>
 
                             <div class="form-group">
                                 <label>Broker phone:</label>
                                 <div class="input-group date">
-                                    <input type="text" class="form-control">
+                                    <input type="text" id="phone" class="form-control" disabled>
                                 </div>
                             </div>
 
                             <div class="form-group">
                                 <label>Broker email:</label>
                                 <div class="input-group date">
-                                    <input type="text" class="form-control">
+                                    <input type="text" id="email" class="form-control" disabled>
                                 </div>
                             </div>
 
                             <div class="form-group">
                                 <label>Broker address:</label>
                                 <div class="input-group date">
-                                    <input type="text" class="form-control">
+                                    <input type="text" id="address" class="form-control" disabled>
                                 </div>
                             </div>
 
@@ -255,19 +255,10 @@ $brokers2 = \yii\helpers\ArrayHelper::getColumn(\app\models\Brokers::find()->all
         </div>
         <!-- /.container-fluid -->
     </section>
-
-
-
     </div>
-
-
-
-
 
     <div class="form-group">
         <?= Html::submitButton(Yii::t('loads', 'Save'), ['class' => 'btn btn-success']) ?>
     </div>
-
     <?php ActiveForm::end(); ?>
 
-</div>
